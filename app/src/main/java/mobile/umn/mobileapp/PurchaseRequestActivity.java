@@ -1,22 +1,17 @@
 package mobile.umn.mobileapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,10 +19,9 @@ import java.util.ArrayList;
 import mobile.umn.mobileapp.adapter.HomeListAdapter;
 import mobile.umn.mobileapp.model.RequestHeader;
 
-public class HomeActivity extends AppCompatActivity
+public class PurchaseRequestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<RequestHeader> requests = new ArrayList<RequestHeader>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +36,7 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ((TextView)findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
+                ((TextView)findViewById(R.id.text_request_count)).setText("You have " + getIntent().getExtras().getInt("requests") + " new requests");
             }
         };
         drawer.addDrawerListener(toggle);
@@ -50,20 +44,6 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-        //Populate the ArrayList with your own values
-        requests.add(new RequestHeader("PR-2018040003","STOCK","erwin","2018-04-03","Rp 3.500.000,00"));
-        requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
-        requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
-
-        HomeListAdapter adapter = new HomeListAdapter(requests);
-        RecyclerView myView =  (RecyclerView)findViewById(R.id.recycler_view);
-        myView.setHasFixedSize(true);
-        myView.setAdapter(adapter);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        myView.setLayoutManager(llm);
     }
 
     @Override
@@ -103,9 +83,7 @@ public class HomeActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_pr) {
-            Intent i = new Intent(HomeActivity.this, PurchaseRequestActivity.class);
-            i.putExtra("requests",requests.size());
-            startActivity(i);
+
         } else if (id == R.id.nav_depthead) {
 
         } else if (id == R.id.nav_finance) {
