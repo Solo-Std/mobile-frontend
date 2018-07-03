@@ -102,15 +102,30 @@
                         android:text="REJECT"
                         android:background="@color/colorAccent"
                         android:textAlignment="center"/>
-                    <Button
-                        android:id="@+id/button_test"
-                        style="@style/Base.Widget.AppCompat.Button.Colored"
+                </TableRow>
+                <TableRow>
+                    <EditText
+                        android:id="@+id/text_details"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="TEST"
-                        android:background="@color/colorPrimaryDark"
-                        android:textAlignment="center"/>
+                        />
+                </TableRow>
+                <TableRow>
+                    <Button
+                        android:text="CONFIRM"
+                        android:id="@+id/button_confirm"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                    <Button
+                        android:text="CANCEL"
+                        android:id="@+id/button_cancel"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
                 </TableRow>
             </TableLayout>
         </TableRow>

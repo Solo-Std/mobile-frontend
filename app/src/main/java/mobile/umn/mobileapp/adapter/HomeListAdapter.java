@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         public TextView request_total;
         public Button button_approve;
         public Button button_reject;
-        public Button button_test;
+
+        public EditText text_details;
+        public Button button_confirm;
+        public Button button_cancel;
 
         public ViewHolder(CardView v) {
             super(v);
@@ -42,7 +46,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             request_total = (TextView)v.findViewById(R.id.text_request_total);
             button_approve = (Button)v.findViewById(R.id.button_approve);
             button_reject = (Button)v.findViewById(R.id.button_reject);
-            button_test = (Button)v.findViewById(R.id.button_test);
+
+            button_confirm = (Button)v.findViewById(R.id.button_confirm);
+            button_cancel = (Button)v.findViewById(R.id.button_cancel);
+            text_details = (EditText)v.findViewById(R.id.text_details);
+
+            button_confirm.setVisibility(View.GONE);
+            button_cancel.setVisibility(View.GONE);
+            text_details.setVisibility(View.GONE);
 
             button_approve.setOnClickListener((view -> {
                 int position = getAdapterPosition();
@@ -54,16 +65,30 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             }));
 
             button_reject.setOnClickListener((view -> {
-                int position = getAdapterPosition();
+                /*int position = getAdapterPosition();
                 mDataset.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Rejected", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                        .setAction("Action", null).show();*/
+                button_confirm.setVisibility(View.VISIBLE);
+                button_cancel.setVisibility(View.VISIBLE);
+                text_details.setVisibility(View.VISIBLE);
             }));
 
-            button_test.setOnClickListener((view -> {
-                button_approve.setVisibility(View.GONE);
+            button_cancel.setOnClickListener((view -> {
+                button_confirm.setVisibility(View.GONE);
+                button_cancel.setVisibility(View.GONE);
+                text_details.setVisibility(View.GONE);
+            }));
+
+            button_confirm.setOnClickListener((view -> {
+                int position = getAdapterPosition();
+                mDataset.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, mDataset.size());
+                Snackbar.make(view, "Request Rejected: " + text_details.getText().toString(), Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
             }));
         }
     }
