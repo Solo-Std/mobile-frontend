@@ -8,29 +8,19 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Button buttonShowAll, buttonShowById;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        buttonShowAll = (Button) findViewById(R.id.buttonShowAll);
-        buttonShowAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MenuActivity.this, MasterItemListActivity.class);
-                startActivity(i);
-            }
+        findViewById(R.id.buttonShowAll).setOnClickListener(v -> {
+            Intent i = new Intent(MenuActivity.this, MasterItemListActivity.class);
+            startActivity(i);
         });
 
-        buttonShowById = (Button) findViewById(R.id.buttonShowById);
-        buttonShowById.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MenuActivity.this, MainActivity.class);
-                startActivity(i);
-            }
+        findViewById(R.id.buttonShowById).setOnClickListener(v -> {
+            Intent i = new Intent(MenuActivity.this, MainActivity.class);
+            startActivity(i);
         });
     }
 }
