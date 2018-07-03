@@ -13,7 +13,6 @@ import mobile.umn.mobileapp.model.MasterItemRestClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonFind;
     private EditText editTextId;
 
     @Override
@@ -23,13 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         editTextId = (EditText) findViewById(R.id.editTextId);
 
-        buttonFind = (Button) findViewById(R.id.buttonFind);
-        buttonFind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int item_id = Integer.parseInt(editTextId.getText().toString());
-                new HttpRequestAsk(item_id).execute();
-            }
+        findViewById(R.id.buttonFind).setOnClickListener(v -> {
+            int item_id = Integer.parseInt(editTextId.getText().toString());
+            new HttpRequestAsk(item_id).execute();
         });
     }
 

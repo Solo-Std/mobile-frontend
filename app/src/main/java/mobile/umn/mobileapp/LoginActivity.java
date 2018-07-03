@@ -27,25 +27,30 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences getter = sharedpreferences;
         String _username = getter.getString("username", null);
         String _password = getter.getString("password", null);
-        if(_username.equals("") || _password.equals("")){
+        if (_username == null || _username.equals("") || _password == null || _password.equals("")) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
 
-            EditText username = (EditText)findViewById(R.id.input_username);
-            EditText password = (EditText)findViewById(R.id.input_password);
-
+            final EditText username = (EditText) findViewById(R.id.input_username);
+            final EditText password = (EditText) findViewById(R.id.input_password);
 
             findViewById(R.id.btn_signin).setOnClickListener((v -> {
-                SharedPreferences.Editor editor = sharedpreferences.edit();
+                if (username.getText().toString().equals("")) {
+                    username.setError("Username cannot be empty");
+                } else if (password.getText().toString().equals("")) {
+                    password.setError("Password cannot be empty");
+                } else {
+                    System.out.println("else");
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                editor.putString("username", username.getText().toString());
-                editor.putString("password", password.getText().toString());
-                editor.commit();
-                new HttpRequestAsk(username.getText().toString(),password.getText().toString()).execute();
+                    editor.putString("username", username.getText().toString());
+                    editor.putString("password", password.getText().toString());
+                    editor.commit();
+                    new HttpRequestAsk(username.getText().toString(), password.getText().toString()).execute();
+                }
             }));
-        }
-        else{
-            new HttpRequestAsk(_username,_password).execute();
+        } else {
+            new HttpRequestAsk(_username, _password).execute();
             super.onCreate(savedInstanceState);
         }
     }
@@ -53,7 +58,8 @@ public class LoginActivity extends AppCompatActivity {
     private class HttpRequestAsk extends AsyncTask<Void, Void, ResponseEntity<Boolean>> {
         String username;
         String password;
-        HttpRequestAsk(String username, String password){
+
+        HttpRequestAsk(String username, String password) {
             this.username = username;
             this.password = password;
         }
@@ -67,8 +73,10 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ResponseEntity<Boolean> booleanResponseEntity) {
             super.onPostExecute(booleanResponseEntity);
-            if(booleanResponseEntity.getBody()){
-                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            if (booleanResponseEntity.getBody()) {
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            } else {
+                Toast.makeText(LoginActivity.this,"Invalid Credential",Toast.LENGTH_LONG).show();
             }
         }
     }
