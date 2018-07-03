@@ -10,7 +10,7 @@
             android:title="Purchase Request" />
         <item
             android:id="@+id/nav_depthead"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_domain_black_24dp"
             android:title="Approval by Dept. Head" />
         <item
             android:id="@+id/nav_finance"
@@ -22,7 +22,7 @@
             android:title="Approval by Purchasing" />
         <item
             android:id="@+id/nav_gm"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_portrait_black_24dp"
             android:title="Approval by General Manager" />
         <item
             android:id="@+id/nav_history"

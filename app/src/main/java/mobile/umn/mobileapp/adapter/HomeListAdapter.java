@@ -31,6 +31,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         public TextView request_total;
         public Button button_approve;
         public Button button_reject;
+        public Button button_test;
+
         public ViewHolder(CardView v) {
             super(v);
             request_id = (TextView)v.findViewById(R.id.text_request_id);
@@ -40,6 +42,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             request_total = (TextView)v.findViewById(R.id.text_request_total);
             button_approve = (Button)v.findViewById(R.id.button_approve);
             button_reject = (Button)v.findViewById(R.id.button_reject);
+            button_test = (Button)v.findViewById(R.id.button_test);
 
             button_approve.setOnClickListener((view -> {
                 int position = getAdapterPosition();
@@ -57,6 +60,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
                 notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Rejected", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+            }));
+
+            button_test.setOnClickListener((view -> {
+                button_approve.setVisibility(View.GONE);
             }));
         }
     }
