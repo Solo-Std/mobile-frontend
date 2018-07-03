@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import entity.MasterItem;
-import model.MasterItemRestClient;
+import mobile.umn.mobileapp.entity.MasterItem;
+import mobile.umn.mobileapp.model.MasterItemRestClient;
 
 public class MainActivity extends AppCompatActivity {
 

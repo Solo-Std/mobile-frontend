@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center"
-    tools:context="mobile.umn.mobileapp.MenuActivity">
+    tools:context="mobile.umn.mobileapp.DebugMenuActivity">
 
     <Button
         android:id="@+id/buttonShowAll"
@@ -20,4 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Show By Id" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LOGIN TEST" />
+    <Button
+        android:id="@+id/home_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="HOME" />
 </LinearLayout>

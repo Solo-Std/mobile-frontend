@@ -7,9 +7,9 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import adapter.MasterItemListAdapter;
-import entity.MasterItem;
-import model.MasterItemRestClient;
+import mobile.umn.mobileapp.adapter.MasterItemListAdapter;
+import mobile.umn.mobileapp.entity.MasterItem;
+import mobile.umn.mobileapp.model.MasterItemRestClient;
 
 public class MasterItemListActivity extends AppCompatActivity {
 
