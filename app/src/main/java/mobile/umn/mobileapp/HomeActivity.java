@@ -29,7 +29,7 @@ import mobile.umn.mobileapp.model.RequestHeader;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<RequestHeader> requests = new ArrayList<RequestHeader>();
+    ArrayList<RequestHeader> requests = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +40,11 @@ public class HomeActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ((TextView)findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
+                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
             }
         };
         drawer.addDrawerListener(toggle);
@@ -55,12 +55,12 @@ public class HomeActivity extends AppCompatActivity
 
 
         //Populate the ArrayList with your own values
-        requests.add(new RequestHeader("PR-2018040003","STOCK","erwin","2018-04-03","Rp 3.500.000,00"));
-        requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
-        requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
+        requests.add(new RequestHeader("PR-2018040003", "STOCK", "erwin", "2018-04-03", "Rp 3.500.000,00"));
+        requests.add(new RequestHeader("PR-2018040007", "STOCK", "erwin", "2018-04-07", "Rp 2.000.000,00"));
+        requests.add(new RequestHeader("PR-2018040012", "NON-STOCK", "erwin", "2018-04-12", "Rp 5.800.000,00"));
 
         HomeListAdapter adapter = new HomeListAdapter(requests);
-        RecyclerView myView =  (RecyclerView)findViewById(R.id.recycler_view);
+        RecyclerView myView = (RecyclerView) findViewById(R.id.recycler_view);
         myView.setHasFixedSize(true);
         myView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_pr) {
             Intent i = new Intent(HomeActivity.this, PurchaseRequestActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests",requests.size());
+            i.putExtra("requests", requests.size());
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
 
@@ -107,7 +107,6 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             Intent i = new Intent(HomeActivity.this, LoginActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i);
             getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
                     .edit()

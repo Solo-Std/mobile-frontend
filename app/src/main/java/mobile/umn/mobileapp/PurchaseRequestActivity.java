@@ -1,5 +1,7 @@
 package mobile.umn.mobileapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 public class PurchaseRequestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,9 +30,21 @@ public class PurchaseRequestActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + getIntent().getExtras().getInt("requests") + " new requests");
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        MaterialSpinner spinner = (MaterialSpinner) findViewById(R.id.spinner);
+        spinner.setItems("STOCK","NON-STOCK");
+        spinner.setOnItemSelectedListener((view, position, id, item) -> {
+
+        });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -60,7 +77,13 @@ public class PurchaseRequestActivity extends AppCompatActivity
         } else if (id == R.id.nav_gm) {
 
         } else if (id == R.id.nav_logout) {
-
+            Intent i = new Intent(PurchaseRequestActivity.this, LoginActivity.class);
+            startActivity(i);
+            getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
+                    .edit()
+                    .remove("username")
+                    .remove("password")
+                    .commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
