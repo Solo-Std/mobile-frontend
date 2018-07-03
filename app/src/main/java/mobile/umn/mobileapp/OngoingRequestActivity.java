@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import mobile.umn.mobileapp.adapter.HomeListAdapter;
+import mobile.umn.mobileapp.adapter.OngoingRequestListAdapter;
 import mobile.umn.mobileapp.model.RequestHeader;
 
-public class HomeActivity extends AppCompatActivity
+public class OngoingRequestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ArrayList<RequestHeader> requests = new ArrayList<RequestHeader>();
@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_ongoing_request);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,7 +56,7 @@ public class HomeActivity extends AppCompatActivity
         requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
         requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
         */
-        HomeListAdapter adapter = new HomeListAdapter(requests);
+        OngoingRequestListAdapter adapter = new OngoingRequestListAdapter(requests);
         RecyclerView myView =  (RecyclerView)findViewById(R.id.recycler_view);
         myView.setHasFixedSize(true);
         myView.setAdapter(adapter);
@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
 
         }
-            else if (id == R.id.nav_requests)
+          else if(id == R.id.nav_requests)
         {
 
         }
@@ -123,3 +123,4 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 }
+

@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import mobile.umn.mobileapp.HomeActivity;
@@ -20,7 +22,7 @@ import mobile.umn.mobileapp.model.RequestHeader;
  * Created by User on 24/05/2018.
  */
 
-public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder>{
+public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingRequestListAdapter.ViewHolder>{
     private ArrayList<RequestHeader> mDataset;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -31,6 +33,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         public TextView request_total;
         public Button button_approve;
         public Button button_reject;
+        public TextView approval_box1,approval_box2,approval_box3,approval_box4;
+
         public ViewHolder(CardView v) {
             super(v);
             request_id = (TextView)v.findViewById(R.id.text_request_id);
@@ -40,6 +44,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             request_total = (TextView)v.findViewById(R.id.text_request_total);
             button_approve = (Button)v.findViewById(R.id.button_approve);
             button_reject = (Button)v.findViewById(R.id.button_reject);
+            approval_box1 = (TextView) v.findViewById(R.id.text_approval_box_1);
+            approval_box2 = (TextView) v.findViewById(R.id.text_approval_box_2);
+            approval_box3 = (TextView) v.findViewById(R.id.text_approval_box_3);
+            approval_box4 = (TextView) v.findViewById(R.id.text_approval_box_4);
 
             button_approve.setOnClickListener((view -> {
                 int position = getAdapterPosition();
@@ -61,14 +69,13 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         }
     }
 
-    public HomeListAdapter(ArrayList<RequestHeader> myDataset) {
+    public OngoingRequestListAdapter(ArrayList<RequestHeader> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public HomeListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public OngoingRequestListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         CardView v = (CardView)LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cardview_home, parent, false);
@@ -86,6 +93,12 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         holder.request_total.setText(mDataset.get(position).getTotal());
         holder.request_date.setText(mDataset.get(position).getDate());
 */
+       /*disini set if buat mati nyalain
+        holder.approval_box1.setVisibility(View.GONE);
+        holder.approval_box2.setVisibility(View.GONE);
+        holder.approval_box3.setVisibility(View.GONE);
+        holder.approval_box4.setVisibility(View.GONE);
+        */
     }
 
     // Return the size of your dataset (invoked by the layout manager)
