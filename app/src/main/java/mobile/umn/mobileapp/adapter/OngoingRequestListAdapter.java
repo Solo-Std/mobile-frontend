@@ -75,6 +75,7 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
 
     public OngoingRequestListAdapter(List<MasterCard> masterCards) {
         this.masterCards = masterCards;
+      //  System.out.println(this.masterCards.get(1).getDate());
     }
 
     // Create new views (invoked by the layout manager)
@@ -89,16 +90,6 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-       /* holder.request_id.setText(mDataset.get(position).getRequest_header_id());
-        holder.request_name.setText(mDataset.get(position).getName());
-        holder.request_type.setText(mDataset.get(position).getType());
-        holder.request_total.setText(mDataset.get(position).getTotal());
-        holder.request_date.setText(mDataset.get(position).getDate());
-*/
-
-//       holder.request_id.setText(masterCards.get(position).getItem_code());
        holder.request_date.setText(masterCards.get(position).getDate());
         holder.request_price.setText(masterCards.get(position).getPrice());
        /*
@@ -113,9 +104,10 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-   // @Override
+    @Override
     public int getItemCount() {
-//        return masterCards.size();
-          return 0;
+        return masterCards.size();
+
+          //return 0;
     }
 }

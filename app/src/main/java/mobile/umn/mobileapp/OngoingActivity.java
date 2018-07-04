@@ -49,7 +49,9 @@ public class OngoingActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         try{
-            mAdapter = new OngoingRequestListAdapter(new HttpRequestAsk().execute().get());
+            new HttpRequestAsk().execute();
+            mAdapter = new OngoingRequestListAdapter(masterCards);
+//            System.out.println("itemcount:"+masterCards.size());
             System.out.println("berhasil");
         }
         catch (Exception e)
@@ -79,7 +81,7 @@ public class OngoingActivity extends AppCompatActivity
 
 
         //OngoingRequestListAdapter adapter = new OngoingRequestListAdapter(requests);//taro list tampungan http request
-        RecyclerView myView =  (RecyclerView) findViewById(R.id.recycler_view);
+        //RecyclerView myView =  (RecyclerView) findViewById(R.id.recycler_view);
         //myView.setHasFixedSize(true);
         //myView.setAdapter(adapter);
 
@@ -91,6 +93,8 @@ public class OngoingActivity extends AppCompatActivity
         @Override
         protected List<MasterCard> doInBackground(Void... voids) {
             MasterCardRestClient masterCardRestClient = new MasterCardRestClient();
+            masterCards = masterCardRestClient.findAll();
+            System.out.println("itemcount:"+masterCards.size());
             return masterCardRestClient.findAll();
         }
 
