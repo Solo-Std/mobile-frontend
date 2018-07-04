@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MasterItem {
-    private int item_id;
-    private String item_code;
-    private String item_name;
-    private int item_price;
+public class RequestDetail {
+    private int detail_id;
+    private MasterItem item;
+    private int total_price;
+    private int item_qty;
 }

@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class MasterItem {
-    private int item_id;
-    private String item_code;
-    private String item_name;
-    private int item_price;
+@NoArgsConstructor
+@Builder
+public class MasterUser {
+    private int user_id;
+    private String username;
+    private String password;
+    private String fullname;
+    private String position;
 }

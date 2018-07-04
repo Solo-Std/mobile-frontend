@@ -1,14 +1,10 @@
 package mobile.umn.mobileapp;
 
-
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,53 +14,77 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.ArrayList;
 
-import mobile.umn.mobileapp.adapter.HomeListAdapter;
-import mobile.umn.mobileapp.model.RequestHeader;
+import mobile.umn.mobileapp.adapter.AddPurchaseRequestAdapter;
+import mobile.umn.mobileapp.entity.MasterItem;
+import mobile.umn.mobileapp.entity.RequestDetail;
 
-public class HomeActivity extends AppCompatActivity
+public class PurchaseRequestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<RequestHeader> requests = new ArrayList<>();
-
+    ArrayList<RequestDetail> requests = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_purchase_request);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.pr_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
+                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + getIntent().getExtras().getInt("requests") + " new requests");
             }
         };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        MaterialSpinner spinner = (MaterialSpinner) findViewById(R.id.spinner);
+        spinner.setItems("STOCK","NON-STOCK");
+        spinner.setOnItemSelectedListener((view, position, id, item) -> {
+
+        });
+
+
+        // add button listener
+        findViewById(R.id.btn_add_item).setOnClickListener(arg0 -> {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setView(getLayoutInflater().inflate(R.layout.dialog_add_item,null));
+
+            dialog.setTitle("Add an item");
+
+//            TextView text = (TextView) dialog.findViewById(R.id.text);
+//            text.setText("Android custom dialog example!");
+//            ImageView image = (ImageView) dialog.findViewById(R.id.image);
+//            image.setImageResource(R.drawable.ic_attach_money_black_24dp);
+//
+//            Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+//            dialogButton.setOnClickListener(v -> dialog.dismiss());
+
+            dialog.show();
+        });
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        requests.add(new RequestDetail(1,new MasterItem(1,"BRW0001","Red Potion",5000),50000,10));
+        requests.add(new RequestDetail(2,new MasterItem(2,"BRW0001","Blue Potion",5000),5000,1));
+        requests.add(new RequestDetail(3,new MasterItem(3,"BRW0001","Green Herb",500),5000,10));
 
 
-       /* //Populate the ArrayList with your own values
-        requests.add(new RequestHeader("PR-2018040003","STOCK","erwin","2018-04-03","Rp 3.500.000,00"));
-        requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
-        requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
-        */
-
-        HomeListAdapter adapter = new HomeListAdapter(requests);
-        RecyclerView myView = (RecyclerView) findViewById(R.id.recycler_view);
+        AddPurchaseRequestAdapter adapter = new AddPurchaseRequestAdapter(requests);
+        RecyclerView myView = (RecyclerView) findViewById(R.id.pr_recycler_view);
         myView.setHasFixedSize(true);
         myView.setAdapter(adapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -82,25 +102,14 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
         if (id == R.id.nav_pr) {
-            Intent i = new Intent(HomeActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", requests.size());
-            startActivity(i);
+
         } else if (id == R.id.nav_depthead) {
 
         } else if (id == R.id.nav_finance) {
@@ -110,7 +119,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_gm) {
 
         } else if (id == R.id.nav_logout) {
-            Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+            Intent i = new Intent(PurchaseRequestActivity.this, LoginActivity.class);
             startActivity(i);
             getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
                     .edit()
@@ -118,10 +127,7 @@ public class HomeActivity extends AppCompatActivity
                     .remove("password")
                     .commit();
         }
-            else if (id == R.id.nav_requests)
-        {
-            startActivity(new Intent(HomeActivity.this,OngoingActivity.class));
-        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

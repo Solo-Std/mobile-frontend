@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_pr"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_insert_drive_file_black_24dp"
             android:title="Purchase Request" />
         <item
             android:id="@+id/nav_depthead"
@@ -14,11 +14,11 @@
             android:title="Approval by Dept. Head" />
         <item
             android:id="@+id/nav_finance"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_attach_money_black_24dp"
             android:title="Approval by Finance" />
         <item
             android:id="@+id/nav_purchasing"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_local_grocery_store_black_24dp"
             android:title="Approval by Purchasing" />
         <item
             android:id="@+id/nav_gm"
@@ -26,7 +26,7 @@
             android:title="Approval by General Manager" />
         <item
             android:id="@+id/nav_history"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_history_black_24dp"
             android:title="Records" />
         <item
             android:id="@+id/nav_requests"
@@ -43,11 +43,11 @@
                 android:title="Preferences" />
             <item
                 android:id="@+id/nav_account"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_person_black_24dp"
                 android:title="Account" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_close_black_24dp"
                 android:title="Logout" />
         </menu>
     </item>
