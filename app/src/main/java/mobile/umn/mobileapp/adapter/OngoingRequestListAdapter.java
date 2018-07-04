@@ -13,7 +13,9 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import entity.MasterCard;
 import mobile.umn.mobileapp.HomeActivity;
 import mobile.umn.mobileapp.R;
 import mobile.umn.mobileapp.model.RequestHeader;
@@ -23,25 +25,27 @@ import mobile.umn.mobileapp.model.RequestHeader;
  */
 
 public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingRequestListAdapter.ViewHolder>{
-    private ArrayList<RequestHeader> mDataset;
+    private List<MasterCard> masterCards;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView request_id;
         public TextView request_type;
         public TextView request_name;
         public TextView request_date;
-        public TextView request_total;
+        public TextView request_price;
+
         public Button button_approve;
         public Button button_reject;
         public TextView approval_box1,approval_box2,approval_box3,approval_box4;
 
         public ViewHolder(CardView v) {
             super(v);
-            request_id = (TextView)v.findViewById(R.id.text_request_id);
-            request_type = (TextView)v.findViewById(R.id.text_request_type);
-            request_name = (TextView)v.findViewById(R.id.text_request_name);
-            request_date = (TextView)v.findViewById(R.id.text_request_date);
-            request_total = (TextView)v.findViewById(R.id.text_request_total);
+            request_id = (TextView)v.findViewById(R.id.text_ongoingrequest_id);
+            request_type = (TextView)v.findViewById(R.id.text_ongoingrequest_type);
+            request_name = (TextView)v.findViewById(R.id.text_ongoingrequest_name);
+            request_date = (TextView)v.findViewById(R.id.text_ongoingrequest_date);
+            request_price = (TextView)v.findViewById(R.id.text_ongoingrequest_price);
             button_approve = (Button)v.findViewById(R.id.button_approve);
             button_reject = (Button)v.findViewById(R.id.button_reject);
             approval_box1 = (TextView) v.findViewById(R.id.text_approval_box_1);
@@ -51,26 +55,26 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
 
             button_approve.setOnClickListener((view -> {
                 int position = getAdapterPosition();
-                mDataset.remove(position);
+               // mDataset.remove(position);
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mDataset.size());
+               // notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Approved", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }));
 
             button_reject.setOnClickListener((view -> {
                 int position = getAdapterPosition();
-                mDataset.remove(position);
+                //mDataset.remove(position);
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mDataset.size());
+                //notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Rejected", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }));
         }
     }
 
-    public OngoingRequestListAdapter(ArrayList<RequestHeader> myDataset) {
-        mDataset = myDataset;
+    public OngoingRequestListAdapter(List<MasterCard> masterCards) {
+        this.masterCards = masterCards;
     }
 
     // Create new views (invoked by the layout manager)
@@ -78,7 +82,7 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     public OngoingRequestListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         CardView v = (CardView)LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cardview_home, parent, false);
+                .inflate(R.layout.ongoingcardview_home, parent, false);
         return new ViewHolder(v);
     }
 
@@ -93,6 +97,13 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
         holder.request_total.setText(mDataset.get(position).getTotal());
         holder.request_date.setText(mDataset.get(position).getDate());
 */
+
+//       holder.request_id.setText(masterCards.get(position).getItem_code());
+       holder.request_date.setText(masterCards.get(position).getDate());
+        holder.request_price.setText(masterCards.get(position).getPrice());
+       /*
+
+        */
        /*disini set if buat mati nyalain
         holder.approval_box1.setVisibility(View.GONE);
         holder.approval_box2.setVisibility(View.GONE);
@@ -102,8 +113,9 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    @Override
+   // @Override
     public int getItemCount() {
-        return mDataset.size();
+//        return masterCards.size();
+          return 0;
     }
 }

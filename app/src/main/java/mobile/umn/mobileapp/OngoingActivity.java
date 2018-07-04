@@ -1,10 +1,9 @@
 package mobile.umn.mobileapp;
 
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,23 +15,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import mobile.umn.mobileapp.adapter.HomeListAdapter;
+import entity.MasterCard;
+import mobile.umn.mobileapp.adapter.OngoingRequestListAdapter;
+import mobile.umn.mobileapp.model.MasterCardRestClient;
 import mobile.umn.mobileapp.model.RequestHeader;
 
-public class HomeActivity extends AppCompatActivity
+public class OngoingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<RequestHeader> requests = new ArrayList<RequestHeader>();
 
+
+    ArrayList<RequestHeader> requests = new ArrayList<RequestHeader>();
+    LinearLayoutManager llm = new LinearLayoutManager(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        new OngoingActivity.HttpRequestAsk().execute();
+        setContentView(R.layout.activity_ongoing_request);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -57,13 +61,29 @@ public class HomeActivity extends AppCompatActivity
         requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
         requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
         */
-        HomeListAdapter adapter = new HomeListAdapter(requests);
-        RecyclerView myView =  (RecyclerView)findViewById(R.id.recycler_view);
-        myView.setHasFixedSize(true);
-        myView.setAdapter(adapter);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        myView.setLayoutManager(llm);
+        //OngoingRequestListAdapter adapter = new OngoingRequestListAdapter(requests);//taro list tampungan http request
+        RecyclerView myView =  (RecyclerView) findViewById(R.id.recycler_view);
+        //myView.setHasFixedSize(true);
+        //myView.setAdapter(adapter);
+
+    }
+
+
+    private class HttpRequestAsk extends AsyncTask<Void, Void, List<MasterCard>> {
+
+        @Override
+        protected List<MasterCard> doInBackground(Void... voids) {
+            MasterCardRestClient masterCardRestClient = new MasterCardRestClient();
+            return masterCardRestClient.findAll();
+        }
+
+        @Override
+        protected void onPostExecute(List<MasterCard> masterCards) {
+            RecyclerView listViewMasterItem = (RecyclerView) findViewById(R.id.recyclerViewOngoingRequest);
+            listViewMasterItem.setAdapter(new OngoingRequestListAdapter(masterCards));
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            listViewMasterItem.setLayoutManager(llm);
+        }
     }
 
     @Override
@@ -115,12 +135,16 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
 
         }
-            else if (id == R.id.nav_requests)
+        else if(id == R.id.nav_requests)
         {
-            startActivity(new Intent(HomeActivity.this,OngoingActivity.class));
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
 }

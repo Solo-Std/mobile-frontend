@@ -20,8 +20,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".MasterItemListActivity" />
-        <activity android:name=".DebugMenuActivity"/>
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".DebugMenuActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,6 +31,11 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".OngoingRequestActivity" />
+        <activity
+            android:name=".OngoingActivity"
+            android:label="@string/title_activity_ongoing"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
