@@ -29,14 +29,37 @@ public class OngoingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    public List<MasterCard> masterCards;
 
     ArrayList<RequestHeader> requests = new ArrayList<RequestHeader>();
     LinearLayoutManager llm = new LinearLayoutManager(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new OngoingActivity.HttpRequestAsk().execute();
-        setContentView(R.layout.activity_ongoing_request);
+//        this.masterCards = new OngoingActivity.HttpRequestAsk().execute();
+        setContentView(R.layout.activity_ongoing);
+        mRecyclerView = (RecyclerView) findViewById(R.id.ongoingrecycler_view);
+
+        mRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+//        mAdapter = new OngoingRequestListAdapter(this.masterCards);
+        try{
+            mAdapter = new OngoingRequestListAdapter(new HttpRequestAsk().execute().get());
+            System.out.println("berhasil");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,11 +79,7 @@ public class OngoingActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-       /* //Populate the ArrayList with your own values
-        requests.add(new RequestHeader("PR-2018040003","STOCK","erwin","2018-04-03","Rp 3.500.000,00"));
-        requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
-        requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
-        */
+
         //OngoingRequestListAdapter adapter = new OngoingRequestListAdapter(requests);//taro list tampungan http request
         RecyclerView myView =  (RecyclerView) findViewById(R.id.recycler_view);
         //myView.setHasFixedSize(true);
@@ -79,10 +98,18 @@ public class OngoingActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(List<MasterCard> masterCards) {
-            RecyclerView listViewMasterItem = (RecyclerView) findViewById(R.id.recyclerViewOngoingRequest);
-            listViewMasterItem.setAdapter(new OngoingRequestListAdapter(masterCards));
-            llm.setOrientation(LinearLayoutManager.VERTICAL);
-            listViewMasterItem.setLayoutManager(llm);
+//            RecyclerView listViewMasterItem = (RecyclerView) findViewById(R.id.recyclerViewOngoingRequest);
+//            listViewMasterItem.setAdapter(new OngoingRequestListAdapter(masterCards));
+//            llm.setOrientation(LinearLayoutManager.VERTICAL);
+//            listViewMasterItem.setLayoutManager(llm);
+
+            mRecyclerView = (RecyclerView) findViewById(R.id.ongoingrecycler_view);
+
+            mRecyclerView.setHasFixedSize(true);
+
+//            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mAdapter = new OngoingRequestListAdapter(masterCards);
         }
     }
 
