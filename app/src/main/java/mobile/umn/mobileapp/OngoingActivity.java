@@ -35,7 +35,6 @@ public class OngoingActivity extends AppCompatActivity
 
     public List<MasterCard> masterCards;
 
-    ArrayList<RequestHeader> requests = new ArrayList<RequestHeader>();
     LinearLayoutManager llm = new LinearLayoutManager(this);
 
     @Override
@@ -43,7 +42,7 @@ public class OngoingActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 //        this.masterCards = new OngoingActivity.HttpRequestAsk().execute();
         setContentView(R.layout.activity_ongoing);
-        mRecyclerView = (RecyclerView) findViewById(R.id.ongoingrecycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.ongoing_recycler_view);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -63,13 +62,13 @@ public class OngoingActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoingdrawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ((TextView)findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
+                ((TextView)findViewById(R.id.text_request_count)).setText("You have " + masterCards.size() + " new requests");
             }
         };
         drawer.addDrawerListener(toggle);
@@ -98,12 +97,7 @@ public class OngoingActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(List<MasterCard> masterCards) {
-//            RecyclerView listViewMasterItem = (RecyclerView) findViewById(R.id.recyclerViewOngoingRequest);
-//            listViewMasterItem.setAdapter(new OngoingRequestListAdapter(masterCards));
-//            llm.setOrientation(LinearLayoutManager.VERTICAL);
-//            listViewMasterItem.setLayoutManager(llm);
-
-            mRecyclerView = (RecyclerView) findViewById(R.id.ongoingrecycler_view);
+            mRecyclerView = (RecyclerView) findViewById(R.id.ongoing_recycler_view);
 
             mRecyclerView.setHasFixedSize(true);
 
