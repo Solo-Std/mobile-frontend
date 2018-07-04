@@ -40,7 +40,6 @@ public class OngoingActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.masterCards = new OngoingActivity.HttpRequestAsk().execute();
         setContentView(R.layout.activity_ongoing);
         mRecyclerView = (RecyclerView) findViewById(R.id.ongoing_recycler_view);
 
@@ -49,7 +48,6 @@ public class OngoingActivity extends AppCompatActivity
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-//        mAdapter = new OngoingRequestListAdapter(this.masterCards);
         try{
             mAdapter = new OngoingRequestListAdapter(new HttpRequestAsk().execute().get());
             System.out.println("berhasil");
@@ -62,7 +60,7 @@ public class OngoingActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoingdrawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoing_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
@@ -70,6 +68,7 @@ public class OngoingActivity extends AppCompatActivity
                 super.onDrawerOpened(drawerView);
                 if(masterCards!= null)((TextView)findViewById(R.id.text_request_count)).setText("You have " + masterCards.size() + " new requests");
             }
+
         };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
