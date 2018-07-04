@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     android:id="@+id/dialog_add_item">
@@ -11,9 +12,12 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:singleLine="true"
+            android:id="@+id/text_search_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search Item..." />
+            android:hint="Search Item..."
+            android:imeOptions="actionDone"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -21,11 +25,56 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/text_qty_item"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Input Quantity..." />
     </android.support.design.widget.TextInputLayout>
 
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/pr_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-</LinearLayout>
+        custom:progress_unreached_color="#CCCCCC"
+        custom:progress_reached_color="#3498DB"
+
+        custom:progress_unreached_bar_height="0.75dp"
+        custom:progress_reached_bar_height="1.5dp"
+
+        custom:progress_text_size="10sp"
+        custom:progress_text_color="#3498DB"
+        custom:progress_text_offset="1dp"
+        custom:progress_text_visibility="visible"
+
+        android:visibility="invisible"
+
+        custom:progress_max="100"
+        custom:progress_current="0"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dialog_pr_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+    <TableRow>
+        <Button
+            android:id="@+id/btn_add_item_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="OK"/>
+        <Button
+            android:id="@+id/btn_add_item_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"/>
+    </TableRow>
+
+
+
+</TableLayout>

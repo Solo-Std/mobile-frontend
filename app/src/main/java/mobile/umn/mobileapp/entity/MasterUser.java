@@ -18,5 +18,5 @@ public class MasterUser {
     private String username;
     private String password;
     private String fullname;
-    private String position;
+    private String jobposition;
 }

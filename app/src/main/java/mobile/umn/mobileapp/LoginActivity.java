@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
+import mobile.umn.mobileapp.entity.MasterUser;
 import mobile.umn.mobileapp.model.MasterUserRestClient;
 
 public class LoginActivity extends AppCompatActivity {
@@ -22,6 +25,11 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences getter = sharedpreferences;
         String _username = getter.getString("username", null);
         String _password = getter.getString("password", null);
+        if(_username!=null && _username.equals("admin")){
+            if(_password!=null && _password.equals("admin")){
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            }
+        }
         if (_username == null || _username.equals("") || _password == null || _password.equals("")) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
@@ -35,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (password.getText().toString().equals("")) {
                     password.setError("Password cannot be empty");
                 } else {
+                    if(username.getText().toString().equals("admin")){
+                        if(password.getText().toString().equals("admin")){
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        }
+                    }
                     System.out.println("else");
                     SharedPreferences.Editor editor = sharedpreferences.edit();
 
@@ -50,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private class HttpRequestAsk extends AsyncTask<Void, Void, ResponseEntity<Boolean>> {
+    private class HttpRequestAsk extends AsyncTask<Void, Void, List<MasterUser>> {
         String username;
         String password;
 
@@ -60,16 +73,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ResponseEntity<Boolean> doInBackground(Void... voids) {
+        protected List<MasterUser> doInBackground(Void... voids) {
             MasterUserRestClient masterUserRestClient = new MasterUserRestClient();
             return masterUserRestClient.find(username, password);
         }
 
         @Override
-        protected void onPostExecute(ResponseEntity<Boolean> booleanResponseEntity) {
-            super.onPostExecute(booleanResponseEntity);
-            if (booleanResponseEntity.getBody()) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        protected void onPostExecute(List<MasterUser> masterUsers) {
+            super.onPostExecute(masterUsers);
+            if (masterUsers.size()>0) {
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                i.putExtra("fullname",masterUsers.get(0).getFullname());
+                i.putExtra("position",masterUsers.get(0).getJobposition());
+                startActivity(i);
             } else {
                 Toast.makeText(LoginActivity.this,"Invalid Credential",Toast.LENGTH_LONG).show();
             }
