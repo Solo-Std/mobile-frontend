@@ -4,28 +4,26 @@ package mobile.umn.mobileapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mobile.umn.mobileapp.adapter.HomeListAdapter;
+import mobile.umn.mobileapp.model.MasterItemRestClient;
 import mobile.umn.mobileapp.model.RequestHeader;
 
 public class HomeActivity extends AppCompatActivity
@@ -104,7 +102,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_depthead) {
 
         } else if (id == R.id.nav_finance) {
-
+            new HttpRequestAsk().execute();
         } else if (id == R.id.nav_purchasing) {
 
         } else if (id == R.id.nav_gm) {
@@ -125,5 +123,30 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private class HttpRequestAsk extends AsyncTask<Void, Void, List<List<Object>>> {
+
+        HttpRequestAsk() {
+
+        }
+
+        @Override
+        protected List<List<Object>> doInBackground(Void... voids) {
+            MasterItemRestClient m = new MasterItemRestClient();
+            return m.findAll();
+        }
+
+        @Override
+        protected void onPostExecute(List<List<Object>> o) {
+            super.onPostExecute(o);
+            for (int i = 0; i < o.size(); i++) {
+//                System.out.println("OBJECT " + i + " : " + o.get(i));
+                for (int j = 0; j < o.get(i).size(); j++) {
+                    System.out.println("              DETAIL " + j + " : " + o.get(i).get(j));
+                }
+                System.out.println("\n");
+            }
+        }
     }
 }

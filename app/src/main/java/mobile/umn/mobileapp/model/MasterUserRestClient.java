@@ -17,23 +17,26 @@ public class MasterUserRestClient {
     private String BASE_URL = "http://mobileapp-backend.herokuapp.com/api/masteruser";
     private RestTemplate restTemplate = new RestTemplate();
 
-    public ResponseEntity<Boolean> find(String username, String password){
+    public List<MasterUser> find(String username, String password) {
         try {
-            return restTemplate.getForEntity(BASE_URL + "/" + username + "/" + password, Boolean.class);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+            return restTemplate.exchange(BASE_URL + "/" + username + "/" + password,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<MasterUser>>() {
+                    }).getBody();
+        } catch (Exception e) {
             return null;
         }
     }
 
-    public List<MasterUser> findAll(){
+    public List<MasterUser> findAll() {
         try {
             return restTemplate.exchange(BASE_URL,
                     HttpMethod.GET,
                     null,
                     new ParameterizedTypeReference<List<MasterUser>>() {
                     }).getBody();
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
