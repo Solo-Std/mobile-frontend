@@ -3,6 +3,7 @@ package mobile.umn.mobileapp.adapter;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,12 +84,17 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             }));
 
             button_confirm.setOnClickListener((view -> {
-                int position = getAdapterPosition();
-                mDataset.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, mDataset.size());
-                Snackbar.make(view, "Request Rejected: " + text_details.getText().toString(), Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                if(TextUtils.isEmpty(text_details.getText())){
+                    text_details.setError("Please state why this request is rejected");
+                }
+                else{
+                    int position = getAdapterPosition();
+                    mDataset.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, mDataset.size());
+                    Snackbar.make(view, "Request Rejected: " + text_details.getText().toString(), Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
             }));
         }
     }
