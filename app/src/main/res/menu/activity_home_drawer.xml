@@ -28,6 +28,11 @@
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_black_24dp"
             android:title="Records" />
+        <item
+            android:id="@+id/nav_requests"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Ongoing Requests" />
+
     </group>
 
     <item android:title="Settings">

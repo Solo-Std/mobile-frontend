@@ -80,12 +80,12 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.request_id.setText(mDataset.get(position).getRequest_header_id());
+       /* holder.request_id.setText(mDataset.get(position).getRequest_header_id());
         holder.request_name.setText(mDataset.get(position).getName());
         holder.request_type.setText(mDataset.get(position).getType());
         holder.request_total.setText(mDataset.get(position).getTotal());
         holder.request_date.setText(mDataset.get(position).getDate());
-
+*/
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -1,7 +1,9 @@
 package mobile.umn.mobileapp;
 
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -52,12 +54,12 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        //Populate the ArrayList with your own values
 
-        requests.add(new RequestHeader("PR-2018040003", "STOCK", "Adjie", "2018-04-03", "Rp 3.500.000,00"));
-        requests.add(new RequestHeader("PR-2018040007", "STOCK", "erwin", "2018-04-07", "Rp 2.000.000,00"));
-        requests.add(new RequestHeader("PR-2018040012", "NON-STOCK", "erwin", "2018-04-12", "Rp 5.800.000,00"));
-
+       /* //Populate the ArrayList with your own values
+        requests.add(new RequestHeader("PR-2018040003","STOCK","erwin","2018-04-03","Rp 3.500.000,00"));
+        requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
+        requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
+        */
 
         HomeListAdapter adapter = new HomeListAdapter(requests);
         RecyclerView myView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -114,7 +116,10 @@ public class HomeActivity extends AppCompatActivity
                     .remove("password")
                     .commit();
         }
-
+            else if (id == R.id.nav_requests)
+        {
+            startActivity(new Intent(HomeActivity.this,OngoingActivity.class));
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
