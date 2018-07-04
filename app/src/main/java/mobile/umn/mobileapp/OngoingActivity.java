@@ -68,7 +68,7 @@ public class OngoingActivity extends AppCompatActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ((TextView)findViewById(R.id.text_request_count)).setText("You have " + masterCards.size() + " new requests");
+                if(masterCards!= null)((TextView)findViewById(R.id.text_request_count)).setText("You have " + masterCards.size() + " new requests");
             }
         };
         drawer.addDrawerListener(toggle);
@@ -109,7 +109,7 @@ public class OngoingActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoing_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -160,7 +160,7 @@ public class OngoingActivity extends AppCompatActivity
         {
 
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoing_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
