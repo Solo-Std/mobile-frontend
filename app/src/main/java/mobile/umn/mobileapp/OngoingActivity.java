@@ -33,7 +33,7 @@ public class OngoingActivity extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public List<MasterCard> masterCards;
+    public List<MasterCard> masterCards = new ArrayList<>();
 
     LinearLayoutManager llm = new LinearLayoutManager(this);
 
@@ -50,15 +50,16 @@ public class OngoingActivity extends AppCompatActivity
 
         try{
             new HttpRequestAsk().execute();
-            mAdapter = new OngoingRequestListAdapter(masterCards);
-//            System.out.println("itemcount:"+masterCards.size());
-            System.out.println("berhasil");
+            //masterCards.add(new MasterCard(123,1123));
+//            mAdapter = new OngoingRequestListAdapter(masterCards);
+//            mRecyclerView.setAdapter(mAdapter);
+            System.out.println("itemcount:"+masterCards.size());
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            System.out.println("berhasil");
         }
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -103,10 +104,9 @@ public class OngoingActivity extends AppCompatActivity
             mRecyclerView = (RecyclerView) findViewById(R.id.ongoing_recycler_view);
 
             mRecyclerView.setHasFixedSize(true);
-
-//            mLayoutManager = new LinearLayoutManager(this);
             mRecyclerView.setLayoutManager(mLayoutManager);
             mAdapter = new OngoingRequestListAdapter(masterCards);
+            mRecyclerView.setAdapter(mAdapter);
         }
     }
 

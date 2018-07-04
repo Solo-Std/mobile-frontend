@@ -1,5 +1,6 @@
 package mobile.umn.mobileapp.adapter;
 
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.MasterCard;
+import lombok.NonNull;
+import lombok.ToString;
 import mobile.umn.mobileapp.HomeActivity;
 import mobile.umn.mobileapp.R;
 import mobile.umn.mobileapp.model.RequestHeader;
@@ -25,7 +28,7 @@ import mobile.umn.mobileapp.model.RequestHeader;
  */
 
 public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingRequestListAdapter.ViewHolder>{
-    private List<MasterCard> masterCards;
+    private List<MasterCard> ongoingmasterCards;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -74,8 +77,8 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     }
 
     public OngoingRequestListAdapter(List<MasterCard> masterCards) {
-        this.masterCards = masterCards;
-      //  System.out.println(this.masterCards.get(1).getDate());
+        ongoingmasterCards = masterCards;
+//        System.out.println("Price:"+this.ongoingmasterCards.get(0).);
     }
 
     // Create new views (invoked by the layout manager)
@@ -88,13 +91,39 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @NonNull
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-       holder.request_date.setText(masterCards.get(position).getDate());
-        holder.request_price.setText(masterCards.get(position).getPrice());
+       //holder.request_date.setText(masterCards.get(position).getDate());
+        System.out.println("POSITION:"+position);
+        holder.request_id.setText(Integer.toString(ongoingmasterCards.get(position).getRequest_header_id()));
+        holder.request_price.setText(Integer.toString(ongoingmasterCards.get(position).getGrand_total()));
+        holder.request_name.setText(ongoingmasterCards.get(position).getRequested_by());
+        holder.request_date.setText(ongoingmasterCards.get(position).getRequest_date());
+
+
        /*
 
         */
+
+        if(ongoingmasterCards.get(position).getApp_by1().equals("ACCEPTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#adff2f"));
+        else if(ongoingmasterCards.get(position).getApp_by1().equals("REJECTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#FF0000"));
+        else holder.approval_box1.setBackgroundColor(Color.parseColor("#cedbef"));
+
+        if(ongoingmasterCards.get(position).getApp_by2().equals("ACCEPTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#7fFF00"));
+        else if(ongoingmasterCards.get(position).getApp_by2().equals("REJECTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#FF0000"));
+        else holder.approval_box2.setBackgroundColor(Color.parseColor("#cedbef"));
+
+        if(ongoingmasterCards.get(position).getApp_by3().equals("ACCEPTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#41FF30"));
+        else if(ongoingmasterCards.get(position).getApp_by3().equals("REJECTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#FF0000"));
+        else holder.approval_box3.setBackgroundColor(Color.parseColor("#cedbef"));
+
+        if(ongoingmasterCards.get(position).getApp_by4().equals("ACCEPTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#00ff00"));
+        else if(ongoingmasterCards.get(position).getApp_by4().equals("REJECTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#FF0000"));
+        else holder.approval_box4.setBackgroundColor(Color.parseColor("#cedbef"));
+
+
+
        /*disini set if buat mati nyalain
         holder.approval_box1.setVisibility(View.GONE);
         holder.approval_box2.setVisibility(View.GONE);
@@ -106,8 +135,7 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return masterCards.size();
-
+        return ongoingmasterCards.size();
           //return 0;
     }
 }

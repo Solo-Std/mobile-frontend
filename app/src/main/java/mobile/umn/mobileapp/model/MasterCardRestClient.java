@@ -14,7 +14,7 @@ import mobile.umn.mobileapp.entity.MasterItem;
  */
 
 public class MasterCardRestClient {
-    private String BASE_URL = "http://mobileapp-backend.herokuapp.com/api/requestheader/all";
+    private String BASE_URL = "http://mobileapp-backend.herokuapp.com/api/requestheader";
     private RestTemplate restTemplate = new RestTemplate();
 
     public MasterCard find(int item_id){
