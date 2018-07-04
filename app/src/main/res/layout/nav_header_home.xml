@@ -30,6 +30,6 @@
         android:id="@+id/text_request_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You have 4 new requests" />
+        android:text="You have # new requests" />
 
 </LinearLayout>

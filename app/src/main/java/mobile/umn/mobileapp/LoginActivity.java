@@ -7,16 +7,11 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-
-import mobile.umn.mobileapp.adapter.MasterItemListAdapter;
-import mobile.umn.mobileapp.entity.MasterItem;
-import model.MasterUserRestClient;
+import mobile.umn.mobileapp.model.MasterUserRestClient;
 
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedpreferences;
