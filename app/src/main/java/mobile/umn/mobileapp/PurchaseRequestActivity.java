@@ -22,14 +22,17 @@ import android.widget.TextView;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import mobile.umn.mobileapp.adapter.AddItemAdapter;
 import mobile.umn.mobileapp.entity.MasterItem;
+import mobile.umn.mobileapp.entity.NonTableDetail;
 import mobile.umn.mobileapp.entity.RequestDetail;
 import mobile.umn.mobileapp.model.MasterItemRestClient;
-import mobile.umn.mobileapp.model.RequestHeader;
+import mobile.umn.mobileapp.entity.RequestHeader;
+import mobile.umn.mobileapp.model.Request;
 import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 public class PurchaseRequestActivity extends AppCompatActivity
@@ -59,7 +62,9 @@ public class PurchaseRequestActivity extends AppCompatActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + getIntent().getExtras().getInt("requests") + " new requests");
+                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
+                ((TextView) findViewById(R.id.text_fullname)).setText(getIntent().getStringExtra("fullname")
+                        + " - " + getIntent().getStringExtra("position"));
             }
         };
         drawer.addDrawerListener(toggle);
@@ -118,11 +123,26 @@ public class PurchaseRequestActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_pr) {
-
+            Intent i = new Intent(PurchaseRequestActivity.this, PurchaseRequestActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_depthead) {
-
+            Intent i = new Intent(PurchaseRequestActivity.this, DeptHeadActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_finance) {
-
+            Intent i = new Intent(PurchaseRequestActivity.this, FinanceActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_purchasing) {
 
         } else if (id == R.id.nav_gm) {
@@ -136,8 +156,12 @@ public class PurchaseRequestActivity extends AppCompatActivity
                     .remove("password")
                     .commit();
         }
+        else if (id == R.id.nav_requests)
+        {
+            startActivity(new Intent(PurchaseRequestActivity.this,OngoingActivity.class));
+        }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.pr_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
@@ -192,7 +216,7 @@ public class PurchaseRequestActivity extends AppCompatActivity
         }
     }
 
-    private class HttpRequestSend extends AsyncTask<Void, Integer, RequestHeader> {
+    private class HttpRequestSend extends AsyncTask<Void, Integer, Request> {
 
         HttpRequestSend() {
 
@@ -200,27 +224,38 @@ public class PurchaseRequestActivity extends AppCompatActivity
         }
 
         @Override
-        protected RequestHeader doInBackground(Void... voids) {
+        protected Request doInBackground(Void... voids) {
             RequestHeaderRestClient r = new RequestHeaderRestClient();
             header = new RequestHeader(
                     0,
                     getIntent().getStringExtra("fullname"),
-                    "",
-                    "",
+                    new java.sql.Date(new java.util.Date().getTime()),
+                    "string",
                     0,
                     spinner.getSelectedIndex() == 0 ? "STOCK" : "NON-STOCK",
-                    "", "",
-                    "", "",
-                    "", "",
-                    "", "",
-                    adapter.gt,
-                    requests
+                    "string", "string",
+                    "string", "string",
+                    "string", "string",
+                    "string", "string",
+                    adapter.gt
             );
-            return r.submit(header);
+            List<NonTableDetail> ntd = new ArrayList<NonTableDetail>();
+            for(RequestDetail req:requests){
+                ntd.add(new NonTableDetail(
+                        req.getItem().getItem_id(),
+                        req.getItem_qty(),
+                        header.getRequest_header_id(),
+                        0
+                ));
+            }
+            Request req = new Request(header,ntd);
+            System.out.println(req.getRequestHeader());
+            System.out.println(req.getListRequestDetail());
+            return r.submit(req);
         }
 
         @Override
-        protected void onPostExecute(RequestHeader requestHeader) {
+        protected void onPostExecute(Request requestHeader) {
             super.onPostExecute(requestHeader);
             System.out.println("DONE : " + requestHeader);
         }

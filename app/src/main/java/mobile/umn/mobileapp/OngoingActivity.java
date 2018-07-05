@@ -2,8 +2,6 @@ package mobile.umn.mobileapp;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,7 +21,6 @@ import java.util.List;
 import entity.MasterCard;
 import mobile.umn.mobileapp.adapter.OngoingRequestListAdapter;
 import mobile.umn.mobileapp.model.MasterCardRestClient;
-import mobile.umn.mobileapp.model.RequestHeader;
 
 public class OngoingActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

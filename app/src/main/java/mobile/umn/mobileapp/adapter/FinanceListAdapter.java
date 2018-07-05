@@ -1,10 +1,11 @@
 package mobile.umn.mobileapp.adapter;
 
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,13 +15,17 @@ import java.util.List;
 import entity.MasterCard;
 import lombok.NonNull;
 import mobile.umn.mobileapp.R;
+import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 /**
  * Created by User on 24/05/2018.
  */
 
-public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingRequestListAdapter.ViewHolder>{
+public class FinanceListAdapter extends RecyclerView.Adapter<FinanceListAdapter.ViewHolder>{
     private List<MasterCard> ongoingmasterCards;
+    View.OnClickListener onClickListener;
+    String position;
+    View view;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -32,7 +37,6 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
 
         public Button button_approve;
         public Button button_reject;
-        public TextView approval_box1,approval_box2,approval_box3,approval_box4;
 
         public ViewHolder(CardView v) {
             super(v);
@@ -43,10 +47,6 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
             request_price = (TextView)v.findViewById(R.id.text_ongoingrequest_price);
             button_approve = (Button)v.findViewById(R.id.button_approve);
             button_reject = (Button)v.findViewById(R.id.button_reject);
-            approval_box1 = (TextView) v.findViewById(R.id.text_approval_box_1);
-            approval_box2 = (TextView) v.findViewById(R.id.text_approval_box_2);
-            approval_box3 = (TextView) v.findViewById(R.id.text_approval_box_3);
-            approval_box4 = (TextView) v.findViewById(R.id.text_approval_box_4);
 
             button_approve.setOnClickListener((view -> {
                 int position = getAdapterPosition();
@@ -55,6 +55,7 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
                // notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Approved", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"fc",true);
             }));
 
             button_reject.setOnClickListener((view -> {
@@ -64,21 +65,32 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
                 //notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Rejected", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"fc",false);
             }));
+
+            if(position.equals("Financial Controller")){
+                button_approve.setVisibility(View.VISIBLE);
+                button_reject.setVisibility(View.VISIBLE);
+            }
+            else{
+                button_approve.setVisibility(View.INVISIBLE);
+                button_reject.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
-    public OngoingRequestListAdapter(List<MasterCard> masterCards) {
+    public FinanceListAdapter(List<MasterCard> masterCards, String position, View.OnClickListener onClickListener) {
         ongoingmasterCards = masterCards;
+        this.position = position;
 //        System.out.println("Price:"+this.ongoingmasterCards.get(0).);
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public OngoingRequestListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FinanceListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         CardView v = (CardView)LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ongoingcardview_home, parent, false);
+                .inflate(R.layout.dh_card_view_home, parent, false);
         return new ViewHolder(v);
     }
 
@@ -92,36 +104,6 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
         holder.request_price.setText(Integer.toString(ongoingmasterCards.get(position).getGrand_total()));
         holder.request_name.setText(ongoingmasterCards.get(position).getRequested_by());
         holder.request_date.setText(ongoingmasterCards.get(position).getRequest_date());
-
-
-       /*
-
-        */
-
-        if(ongoingmasterCards.get(position).getApp_by1().equals("ACCEPTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#adff2f"));
-        else if(ongoingmasterCards.get(position).getApp_by1().equals("REJECTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box1.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by2().equals("ACCEPTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#7fFF00"));
-        else if(ongoingmasterCards.get(position).getApp_by2().equals("REJECTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box2.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by3().equals("ACCEPTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#41FF30"));
-        else if(ongoingmasterCards.get(position).getApp_by3().equals("REJECTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box3.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by4().equals("ACCEPTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#00ff00"));
-        else if(ongoingmasterCards.get(position).getApp_by4().equals("REJECTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box4.setBackgroundColor(Color.parseColor("#cedbef"));
-
-
-
-       /*disini set if buat mati nyalain
-        holder.approval_box1.setVisibility(View.GONE);
-        holder.approval_box2.setVisibility(View.GONE);
-        holder.approval_box3.setVisibility(View.GONE);
-        holder.approval_box4.setVisibility(View.GONE);
-        */
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -129,5 +111,29 @@ public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingReque
     public int getItemCount() {
         return ongoingmasterCards.size();
           //return 0;
+    }
+
+    private class HttpRequestPut extends AsyncTask<Void, Void, Void> {
+        Long request_id;
+        String division;
+        boolean approve;
+
+        HttpRequestPut(Long request_id, String division, boolean approve) {
+            this.request_id = request_id;
+            this.division = division;
+            this.approve = approve;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            RequestHeaderRestClient rhrc = new RequestHeaderRestClient();
+            rhrc.approve(request_id, division, approve);
+            return voids[0];
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            onClickListener.onClick(view);
+        }
     }
 }

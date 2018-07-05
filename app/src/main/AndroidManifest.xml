@@ -42,6 +42,7 @@
             android:label="@string/title_activity_dept_head"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+
             android:name=".HistoryActivity"
             android:label="@string/title_activity_history"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -52,6 +53,10 @@
         <activity
             android:name=".GeneralManagerActivity"
             android:label="@string/title_activity_general_manager"
+
+            android:name=".FinanceActivity"
+            android:label="@string/title_activity_finance"
+
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
