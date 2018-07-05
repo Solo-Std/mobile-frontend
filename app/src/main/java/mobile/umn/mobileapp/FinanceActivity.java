@@ -102,7 +102,6 @@ public class FinanceActivity extends AppCompatActivity
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
-            i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
             Intent i = new Intent(FinanceActivity.this, DeptHeadActivity.class);
@@ -157,7 +156,10 @@ public class FinanceActivity extends AppCompatActivity
 
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(mLayoutManager);
-            mAdapter = new FinanceListAdapter(masterCards,getIntent().getStringExtra("position"));
+            mAdapter = new DeptHeadListAdapter(
+                    masterCards, getIntent().getStringExtra("position"),args0->{
+                new HttpRequestAsk().execute();
+            });
             mRecyclerView.setAdapter(mAdapter);
         }
     }

@@ -1,5 +1,6 @@
 package mobile.umn.mobileapp.adapter;
 
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import java.util.List;
 import entity.MasterCard;
 import lombok.NonNull;
 import mobile.umn.mobileapp.R;
+import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 /**
  * Created by User on 24/05/2018.
@@ -21,7 +23,9 @@ import mobile.umn.mobileapp.R;
 
 public class FinanceListAdapter extends RecyclerView.Adapter<FinanceListAdapter.ViewHolder>{
     private List<MasterCard> ongoingmasterCards;
+    View.OnClickListener onClickListener;
     String position;
+    View view;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -51,6 +55,7 @@ public class FinanceListAdapter extends RecyclerView.Adapter<FinanceListAdapter.
                // notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Approved", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"fc",true);
             }));
 
             button_reject.setOnClickListener((view -> {
@@ -60,6 +65,7 @@ public class FinanceListAdapter extends RecyclerView.Adapter<FinanceListAdapter.
                 //notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Rejected", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"fc",false);
             }));
 
             if(position.equals("Financial Controller")){
@@ -73,7 +79,7 @@ public class FinanceListAdapter extends RecyclerView.Adapter<FinanceListAdapter.
         }
     }
 
-    public FinanceListAdapter(List<MasterCard> masterCards, String position) {
+    public FinanceListAdapter(List<MasterCard> masterCards, String position, View.OnClickListener onClickListener) {
         ongoingmasterCards = masterCards;
         this.position = position;
 //        System.out.println("Price:"+this.ongoingmasterCards.get(0).);
@@ -105,5 +111,29 @@ public class FinanceListAdapter extends RecyclerView.Adapter<FinanceListAdapter.
     public int getItemCount() {
         return ongoingmasterCards.size();
           //return 0;
+    }
+
+    private class HttpRequestPut extends AsyncTask<Void, Void, Void> {
+        Long request_id;
+        String division;
+        boolean approve;
+
+        HttpRequestPut(Long request_id, String division, boolean approve) {
+            this.request_id = request_id;
+            this.division = division;
+            this.approve = approve;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            RequestHeaderRestClient rhrc = new RequestHeaderRestClient();
+            rhrc.approve(request_id, division, approve);
+            return voids[0];
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            onClickListener.onClick(view);
+        }
     }
 }
