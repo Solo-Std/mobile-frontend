@@ -118,8 +118,20 @@ public class FinanceActivity extends AppCompatActivity
             i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_purchasing) {
+            Intent i = new Intent(FinanceActivity.this, PurchasingActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
 
         } else if (id == R.id.nav_gm) {
+            Intent i = new Intent(FinanceActivity.this, GeneralManagerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
 
         } else if (id == R.id.nav_logout) {
             Intent i = new Intent(FinanceActivity.this, LoginActivity.class);
@@ -129,10 +141,8 @@ public class FinanceActivity extends AppCompatActivity
                     .remove("username")
                     .remove("password")
                     .commit();
-        }
-        else if (id == R.id.nav_requests)
-        {
-            startActivity(new Intent(FinanceActivity.this,OngoingActivity.class));
+        } else if (id == R.id.nav_requests) {
+            startActivity(new Intent(FinanceActivity.this, OngoingActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.fin_drawer_layout);

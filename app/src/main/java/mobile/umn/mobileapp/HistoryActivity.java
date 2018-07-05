@@ -1,5 +1,7 @@
 package mobile.umn.mobileapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -139,21 +141,52 @@ public class HistoryActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_pr) {
-            // Handle the camera action
+            Intent i = new Intent(HistoryActivity.this, PurchaseRequestActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_depthead) {
-
+            Intent i = new Intent(HistoryActivity.this, DeptHeadActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_finance) {
-
+            Intent i = new Intent(HistoryActivity.this, FinanceActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_purchasing) {
+            Intent i = new Intent(HistoryActivity.this, PurchasingActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
 
         } else if (id == R.id.nav_gm) {
+            Intent i = new Intent(HistoryActivity.this, GeneralManagerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
 
         } else if (id == R.id.nav_logout) {
-
-        }
-        else if(id == R.id.nav_requests)
-        {
-
+            Intent i = new Intent(HistoryActivity.this, LoginActivity.class);
+            startActivity(i);
+            getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
+                    .edit()
+                    .remove("username")
+                    .remove("password")
+                    .commit();
+        } else if (id == R.id.nav_requests) {
+            startActivity(new Intent(HistoryActivity.this, OngoingActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

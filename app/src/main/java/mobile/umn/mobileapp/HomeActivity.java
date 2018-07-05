@@ -137,10 +137,21 @@ public class HomeActivity extends AppCompatActivity
             i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_purchasing) {
+            Intent i = new Intent(HomeActivity.this, PurchasingActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
 
-            startActivity(new Intent(HomeActivity.this,PurchasingActivity.class));
         } else if (id == R.id.nav_gm) {
-            startActivity(new Intent(HomeActivity.this,GeneralManagerActivity.class));
+            Intent i = new Intent(HomeActivity.this, GeneralManagerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
+
         } else if (id == R.id.nav_logout) {
             Intent i = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(i);
@@ -149,14 +160,8 @@ public class HomeActivity extends AppCompatActivity
                     .remove("username")
                     .remove("password")
                     .commit();
-        }
-            else if(id == R.id.nav_history)
-        {
-            startActivity(new Intent(HomeActivity.this,HistoryActivity.class));
-        }
-            else if (id == R.id.nav_requests)
-        {
-            startActivity(new Intent(HomeActivity.this,OngoingActivity.class));
+        } else if (id == R.id.nav_requests) {
+            startActivity(new Intent(HomeActivity.this, OngoingActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

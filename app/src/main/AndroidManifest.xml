@@ -53,10 +53,11 @@
         <activity
             android:name=".GeneralManagerActivity"
             android:label="@string/title_activity_general_manager"
-
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity
             android:name=".FinanceActivity"
             android:label="@string/title_activity_finance"
-
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

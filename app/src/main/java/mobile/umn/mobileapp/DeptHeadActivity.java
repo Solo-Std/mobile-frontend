@@ -116,8 +116,20 @@ public class DeptHeadActivity extends AppCompatActivity
             i.putExtra("position", getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_purchasing) {
+            Intent i = new Intent(DeptHeadActivity.this, PurchasingActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
 
         } else if (id == R.id.nav_gm) {
+            Intent i = new Intent(DeptHeadActivity.this, GeneralManagerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
 
         } else if (id == R.id.nav_logout) {
             Intent i = new Intent(DeptHeadActivity.this, LoginActivity.class);
