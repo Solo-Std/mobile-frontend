@@ -48,6 +48,10 @@
         <activity
             android:name=".PurchasingActivity"
             android:label="@string/title_activity_purchasing"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GeneralManagerActivity"
+            android:label="@string/title_activity_general_manager"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

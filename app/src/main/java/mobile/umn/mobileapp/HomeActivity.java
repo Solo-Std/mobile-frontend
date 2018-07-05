@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity
 
             startActivity(new Intent(HomeActivity.this,PurchasingActivity.class));
         } else if (id == R.id.nav_gm) {
-
+            startActivity(new Intent(HomeActivity.this,GeneralManagerActivity.class));
         } else if (id == R.id.nav_logout) {
             Intent i = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(i);
