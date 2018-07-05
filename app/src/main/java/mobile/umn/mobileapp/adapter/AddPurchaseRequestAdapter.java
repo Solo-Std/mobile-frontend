@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import mobile.umn.mobileapp.R;
 import mobile.umn.mobileapp.entity.MasterItem;
@@ -55,10 +57,15 @@ public class AddPurchaseRequestAdapter extends RecyclerView.Adapter<AddPurchaseR
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        Locale indon = new Locale("id", "ID");
+        NumberFormat indonFormat = NumberFormat.getCurrencyInstance(indon);
         holder.item_name.setText(mDataset.get(position).getItem().getItem_name());
-        holder.item_qty.setText(String.valueOf(mDataset.get(position).getItem_qty()));
-        holder.item_price.setText(String.valueOf(mDataset.get(position).getItem().getItem_price()));
-        holder.item_total.setText(String.valueOf(mDataset.get(position).getTotal_price()));
+        holder.item_qty.setText(
+                String.format("%s%s", String.valueOf(mDataset.get(position).getItem_qty()),
+                        mDataset.get(position).getItem().getUom())
+        );
+        holder.item_price.setText(indonFormat.format(mDataset.get(position).getItem().getItem_price()));
+        holder.item_total.setText(indonFormat.format(mDataset.get(position).getTotal_price()));
     }
 
     // Return the size of your dataset (invoked by the layout manager)

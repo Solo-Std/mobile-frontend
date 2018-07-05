@@ -16,7 +16,7 @@
             android:id="@+id/text_search_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search Item..."
+            android:hint="Search Item"
             android:imeOptions="actionDone"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -29,7 +29,7 @@
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Input Quantity..." />
+            android:hint="Input Quantity" />
     </android.support.design.widget.TextInputLayout>
 
     <com.daimajia.numberprogressbar.NumberProgressBar
@@ -59,22 +59,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
-
-    <TableRow>
-        <Button
-            android:id="@+id/btn_add_item_ok"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="OK"/>
-        <Button
-            android:id="@+id/btn_add_item_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancel"/>
-    </TableRow>
-
-
-
 </TableLayout>

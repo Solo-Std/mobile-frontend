@@ -15,11 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import mobile.umn.mobileapp.R;
 import mobile.umn.mobileapp.entity.MasterItem;
 import mobile.umn.mobileapp.entity.RequestDetail;
+import mobile.umn.mobileapp.model.RequestHeader;
 
 /**
  * Created by User on 24/05/2018.
@@ -31,6 +34,7 @@ public class AddItemAdapter extends RecyclerView.Adapter<AddItemAdapter.ViewHold
     private Dialog dialog;
     private Context context;
     private Activity activity;
+    public Integer gt;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView item_name;
@@ -71,9 +75,11 @@ public class AddItemAdapter extends RecyclerView.Adapter<AddItemAdapter.ViewHold
         // - replace the contents of the view with that element
 
         Integer price = mDataset.get(position).getItem_price();
+        Locale indon = new Locale("id", "ID");
+        NumberFormat indonFormat = NumberFormat.getCurrencyInstance(indon);
         holder.item_name.setText(mDataset.get(position).getItem_name());
         holder.item_code.setText(mDataset.get(position).getItem_code());
-        holder.item_price.setText(String.valueOf(price));
+        holder.item_price.setText(indonFormat.format(price));
 
 
         holder.itemView.setOnClickListener(param0->{
@@ -86,6 +92,16 @@ public class AddItemAdapter extends RecyclerView.Adapter<AddItemAdapter.ViewHold
                 Integer total = price * _qty;
                 requests.add(new RequestDetail(0,mDataset.get(position),total,_qty));
                 dialog.hide();
+
+                TextView grandtotal = activity.findViewById(R.id.text_grandtotal);
+                Integer _grandtotal = 0;
+                for(RequestDetail r:requests){
+                    _grandtotal += r.getTotal_price();
+                }
+                gt = _grandtotal;
+                System.out.println("GRANDTOTAL : " + gt);
+                grandtotal.setText(indonFormat.format(_grandtotal));
+
 
                 AddPurchaseRequestAdapter adapter = new AddPurchaseRequestAdapter(requests);
                 RecyclerView myView = (RecyclerView) activity.findViewById(R.id.pr_recycler_view);

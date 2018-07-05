@@ -10,39 +10,61 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <com.jaredrummler.materialspinner.MaterialSpinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Discount"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/btn_add_item"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add item"/>
+        android:layout_weight="1">
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/pr_recycler_view"
-        android:scrollbars="vertical"
+        <LinearLayout
+            android:padding="8dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Grand Total"/>
+            <TextView
+                android:id="@+id/text_grandtotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:text="Rp0"/>
+        </LinearLayout>
+
+        <TableRow>
+            <Button
+                android:id="@+id/btn_add_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Add item"/>
+        </TableRow>
+
+        <TableRow>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/pr_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:scrollbars="vertical" />
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:id="@+id/btn_save_pr"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="0"
+        android:text="SAVE"/>
 </LinearLayout>

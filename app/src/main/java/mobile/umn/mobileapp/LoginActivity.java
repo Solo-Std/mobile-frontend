@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             new HttpRequestAsk(_username, _password).execute();
             super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
         }
     }
 

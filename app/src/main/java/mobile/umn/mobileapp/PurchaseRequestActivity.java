@@ -26,10 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobile.umn.mobileapp.adapter.AddItemAdapter;
-import mobile.umn.mobileapp.adapter.AddPurchaseRequestAdapter;
 import mobile.umn.mobileapp.entity.MasterItem;
 import mobile.umn.mobileapp.entity.RequestDetail;
 import mobile.umn.mobileapp.model.MasterItemRestClient;
+import mobile.umn.mobileapp.model.RequestHeader;
+import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 public class PurchaseRequestActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,9 +38,13 @@ public class PurchaseRequestActivity extends AppCompatActivity
     Context context = this;
     Activity activity = this;
     Dialog dialog;
+    RequestHeader header;
     NumberProgressBar loader;
     ArrayList<RequestDetail> requests = new ArrayList<>();
     ArrayList<MasterItem> items = new ArrayList<>();
+    MaterialSpinner spinner;
+
+    AddItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +65,15 @@ public class PurchaseRequestActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        MaterialSpinner spinner = (MaterialSpinner) findViewById(R.id.spinner);
+        spinner = (MaterialSpinner) findViewById(R.id.spinner);
         spinner.setItems("STOCK", "NON-STOCK");
         spinner.setOnItemSelectedListener((view, position, id, item) -> {
 
+        });
+
+        findViewById(R.id.btn_save_pr).setOnClickListener(param0 -> {
+            System.out.println("GRANDTOTAL DI ACTIVITY : " + adapter.gt);
+            new HttpRequestSend().execute();
         });
 
         // add button listener
@@ -79,6 +89,7 @@ public class PurchaseRequestActivity extends AppCompatActivity
                 loader.setVisibility(View.VISIBLE);
                 if (actionId == 0) {
                     new HttpRequestAsk(search.getText().toString()).execute();
+                    dialog.findViewById(R.id.text_qty_item).requestFocus();
                     return true;
                 }
                 return false;
@@ -167,7 +178,8 @@ public class PurchaseRequestActivity extends AppCompatActivity
             super.onPostExecute(masterItems);
             items = new ArrayList<>(masterItems);
             if (masterItems.size() > 0) {
-                AddItemAdapter adapter = new AddItemAdapter(items,requests,dialog,context,activity);
+                adapter = new AddItemAdapter(
+                        items, requests, dialog, context, activity);
                 RecyclerView myView = (RecyclerView) dialog.findViewById(R.id.dialog_pr_item_list);
                 myView.setHasFixedSize(true);
                 myView.setAdapter(adapter);
@@ -177,6 +189,40 @@ public class PurchaseRequestActivity extends AppCompatActivity
             }
 
             loader.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private class HttpRequestSend extends AsyncTask<Void, Integer, RequestHeader> {
+
+        HttpRequestSend() {
+
+
+        }
+
+        @Override
+        protected RequestHeader doInBackground(Void... voids) {
+            RequestHeaderRestClient r = new RequestHeaderRestClient();
+            header = new RequestHeader(
+                    0,
+                    getIntent().getStringExtra("fullname"),
+                    "",
+                    "",
+                    0,
+                    spinner.getSelectedIndex() == 0 ? "STOCK" : "NON-STOCK",
+                    "", "",
+                    "", "",
+                    "", "",
+                    "", "",
+                    adapter.gt,
+                    requests
+            );
+            return r.submit(header);
+        }
+
+        @Override
+        protected void onPostExecute(RequestHeader requestHeader) {
+            super.onPostExecute(requestHeader);
+            System.out.println("DONE : " + requestHeader);
         }
     }
 }

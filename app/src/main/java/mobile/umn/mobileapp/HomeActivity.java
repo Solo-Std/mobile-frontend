@@ -98,6 +98,7 @@ public class HomeActivity extends AppCompatActivity
             Intent i = new Intent(HomeActivity.this, PurchaseRequestActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
 
