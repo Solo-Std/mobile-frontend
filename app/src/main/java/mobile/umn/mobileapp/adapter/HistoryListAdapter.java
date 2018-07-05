@@ -118,10 +118,10 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
         else if(historymasterCards.get(position).getApp_by4().equals("REJECTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#FF0000"));
         else holder.approval_box4.setBackgroundColor(Color.parseColor("#cedbef"));
 
-        if(historymasterCards.get(position).getApp_by1().equals("ACCEPTED") &&
-                historymasterCards.get(position).getApp_by2().equals("ACCEPTED") &&
-                historymasterCards.get(position).getApp_by3().equals("ACCEPTED") &&
-                historymasterCards.get(position).getApp_by4().equals("ACCEPTED") )
+        if(!historymasterCards.get(position).getApp_by1().equals("ACCEPTED") ||
+                !historymasterCards.get(position).getApp_by2().equals("ACCEPTED") ||
+                !historymasterCards.get(position).getApp_by3().equals("ACCEPTED") ||
+                !historymasterCards.get(position).getApp_by4().equals("ACCEPTED") )
         {
             holder.wholetable.setVisibility(View.GONE);
         }
