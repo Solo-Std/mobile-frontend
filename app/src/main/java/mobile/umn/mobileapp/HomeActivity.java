@@ -69,6 +69,34 @@ public class HomeActivity extends AppCompatActivity
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         myView.setLayoutManager(llm);
+
+
+        if (getIntent().getStringExtra("position").equals("Employee")) {
+            Intent i = new Intent(HomeActivity.this, PurchaseRequestActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
+        } else if (getIntent().getStringExtra("position").equals("Department Head")) {
+            Intent i = new Intent(HomeActivity.this, DeptHeadActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
+        } else if (getIntent().getStringExtra("position").equals("Financial Controller")) {
+            Intent i = new Intent(HomeActivity.this, FinanceActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
+        } else if (getIntent().getStringExtra("position").equals("Purchasing Manager")) {
+
+        } else if (getIntent().getStringExtra("position").equals("General Manager")) {
+
+        }
     }
 
     @Override
@@ -136,30 +164,5 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private class HttpRequestAsk extends AsyncTask<Void, Void, List<List<Object>>> {
-
-        HttpRequestAsk() {
-
-        }
-
-        @Override
-        protected List<List<Object>> doInBackground(Void... voids) {
-            MasterItemRestClient m = new MasterItemRestClient();
-            return m.findAll();
-        }
-
-        @Override
-        protected void onPostExecute(List<List<Object>> o) {
-            super.onPostExecute(o);
-            for (int i = 0; i < o.size(); i++) {
-//                System.out.println("OBJECT " + i + " : " + o.get(i));
-                for (int j = 0; j < o.get(i).size(); j++) {
-                    System.out.println("              DETAIL " + j + " : " + o.get(i).get(j));
-                }
-                System.out.println("\n");
-            }
-        }
     }
 }

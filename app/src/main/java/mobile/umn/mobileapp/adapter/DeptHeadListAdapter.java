@@ -1,6 +1,6 @@
 package mobile.umn.mobileapp.adapter;
 
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,17 +15,20 @@ import java.util.List;
 import entity.MasterCard;
 import lombok.NonNull;
 import mobile.umn.mobileapp.R;
+import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 /**
  * Created by User on 24/05/2018.
  */
 
-public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapter.ViewHolder>{
+public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapter.ViewHolder> {
     private List<MasterCard> ongoingmasterCards;
+    View.OnClickListener onClickListener;
     String position;
+    View view;
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView request_id;
         public TextView request_type;
         public TextView request_name;
@@ -37,21 +40,22 @@ public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapte
 
         public ViewHolder(CardView v) {
             super(v);
-            request_id = (TextView)v.findViewById(R.id.text_ongoingrequest_id);
-            request_type = (TextView)v.findViewById(R.id.text_ongoingrequest_type);
-            request_name = (TextView)v.findViewById(R.id.text_ongoingrequest_name);
-            request_date = (TextView)v.findViewById(R.id.text_ongoingrequest_date);
-            request_price = (TextView)v.findViewById(R.id.text_ongoingrequest_price);
-            button_approve = (Button)v.findViewById(R.id.button_approve);
-            button_reject = (Button)v.findViewById(R.id.button_reject);
+            request_id = (TextView) v.findViewById(R.id.text_ongoingrequest_id);
+            request_type = (TextView) v.findViewById(R.id.text_ongoingrequest_type);
+            request_name = (TextView) v.findViewById(R.id.text_ongoingrequest_name);
+            request_date = (TextView) v.findViewById(R.id.text_ongoingrequest_date);
+            request_price = (TextView) v.findViewById(R.id.text_ongoingrequest_price);
+            button_approve = (Button) v.findViewById(R.id.button_approve);
+            button_reject = (Button) v.findViewById(R.id.button_reject);
 
             button_approve.setOnClickListener((view -> {
                 int position = getAdapterPosition();
-               // mDataset.remove(position);
+                // mDataset.remove(position);
                 notifyItemRemoved(position);
-               // notifyItemRangeChanged(position, mDataset.size());
+                // notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Approved", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"dh",true);
             }));
 
             button_reject.setOnClickListener((view -> {
@@ -61,22 +65,23 @@ public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapte
                 //notifyItemRangeChanged(position, mDataset.size());
                 Snackbar.make(view, "Request Rejected", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
+                new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"dh",false);
             }));
 
-            if(position.equals("Department Head")){
+            if (position.equals("Department Head")) {
                 button_approve.setVisibility(View.VISIBLE);
                 button_reject.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 button_approve.setVisibility(View.INVISIBLE);
                 button_reject.setVisibility(View.INVISIBLE);
             }
         }
     }
 
-    public DeptHeadListAdapter(List<MasterCard> masterCards, String position) {
+    public DeptHeadListAdapter(List<MasterCard> masterCards, String position, View.OnClickListener onClickListener) {
         ongoingmasterCards = masterCards;
         this.position = position;
+        this.onClickListener = onClickListener;
 //        System.out.println("Price:"+this.ongoingmasterCards.get(0).);
     }
 
@@ -84,7 +89,8 @@ public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapte
     @Override
     public DeptHeadListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        CardView v = (CardView)LayoutInflater.from(parent.getContext())
+        view = parent;
+        CardView v = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.dh_card_view_home, parent, false);
         return new ViewHolder(v);
     }
@@ -93,8 +99,8 @@ public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapte
     @NonNull
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-       //holder.request_date.setText(masterCards.get(position).getDate());
-        System.out.println("POSITION:"+position);
+        //holder.request_date.setText(masterCards.get(position).getDate());
+        System.out.println("POSITION:" + position);
         holder.request_id.setText(Integer.toString(ongoingmasterCards.get(position).getRequest_header_id()));
         holder.request_price.setText(Integer.toString(ongoingmasterCards.get(position).getGrand_total()));
         holder.request_name.setText(ongoingmasterCards.get(position).getRequested_by());
@@ -105,6 +111,30 @@ public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapte
     @Override
     public int getItemCount() {
         return ongoingmasterCards.size();
-          //return 0;
+        //return 0;
+    }
+
+    private class HttpRequestPut extends AsyncTask<Void, Void, Void> {
+        Long request_id;
+        String division;
+        boolean approve;
+
+        HttpRequestPut(Long request_id, String division, boolean approve) {
+            this.request_id = request_id;
+            this.division = division;
+            this.approve = approve;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            RequestHeaderRestClient rhrc = new RequestHeaderRestClient();
+            rhrc.approve(request_id, division, approve);
+            return voids[0];
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            onClickListener.onClick(view);
+        }
     }
 }

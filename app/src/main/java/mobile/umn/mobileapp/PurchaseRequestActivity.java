@@ -22,14 +22,17 @@ import android.widget.TextView;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import mobile.umn.mobileapp.adapter.AddItemAdapter;
 import mobile.umn.mobileapp.entity.MasterItem;
+import mobile.umn.mobileapp.entity.NonTableDetail;
 import mobile.umn.mobileapp.entity.RequestDetail;
 import mobile.umn.mobileapp.model.MasterItemRestClient;
 import mobile.umn.mobileapp.entity.RequestHeader;
+import mobile.umn.mobileapp.model.Request;
 import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 public class PurchaseRequestActivity extends AppCompatActivity
@@ -213,7 +216,7 @@ public class PurchaseRequestActivity extends AppCompatActivity
         }
     }
 
-    private class HttpRequestSend extends AsyncTask<Void, Integer, RequestHeader> {
+    private class HttpRequestSend extends AsyncTask<Void, Integer, Request> {
 
         HttpRequestSend() {
 
@@ -221,27 +224,38 @@ public class PurchaseRequestActivity extends AppCompatActivity
         }
 
         @Override
-        protected RequestHeader doInBackground(Void... voids) {
+        protected Request doInBackground(Void... voids) {
             RequestHeaderRestClient r = new RequestHeaderRestClient();
             header = new RequestHeader(
                     0,
                     getIntent().getStringExtra("fullname"),
-                    "",
-                    "",
+                    new java.sql.Date(new java.util.Date().getTime()),
+                    "string",
                     0,
                     spinner.getSelectedIndex() == 0 ? "STOCK" : "NON-STOCK",
-                    "", "",
-                    "", "",
-                    "", "",
-                    "", "",
-                    adapter.gt,
-                    requests
+                    "string", "string",
+                    "string", "string",
+                    "string", "string",
+                    "string", "string",
+                    adapter.gt
             );
-            return r.submit(header);
+            List<NonTableDetail> ntd = new ArrayList<NonTableDetail>();
+            for(RequestDetail req:requests){
+                ntd.add(new NonTableDetail(
+                        req.getItem().getItem_id(),
+                        req.getItem_qty(),
+                        header.getRequest_header_id(),
+                        0
+                ));
+            }
+            Request req = new Request(header,ntd);
+            System.out.println(req.getRequestHeader());
+            System.out.println(req.getListRequestDetail());
+            return r.submit(req);
         }
 
         @Override
-        protected void onPostExecute(RequestHeader requestHeader) {
+        protected void onPostExecute(Request requestHeader) {
             super.onPostExecute(requestHeader);
             System.out.println("DONE : " + requestHeader);
         }

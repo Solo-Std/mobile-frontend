@@ -1,5 +1,6 @@
 package mobile.umn.mobileapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -36,6 +37,7 @@ public class DeptHeadActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dept_head);
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.dh_recycler_view);
 
@@ -96,22 +98,22 @@ public class DeptHeadActivity extends AppCompatActivity
             Intent i = new Intent(DeptHeadActivity.this, PurchaseRequestActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
-            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
-            i.putExtra("position",getIntent().getStringExtra("position"));
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
             Intent i = new Intent(DeptHeadActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
-            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
-            i.putExtra("position",getIntent().getStringExtra("position"));
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_finance) {
             Intent i = new Intent(DeptHeadActivity.this, FinanceActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
-            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
-            i.putExtra("position",getIntent().getStringExtra("position"));
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_purchasing) {
 
@@ -125,10 +127,8 @@ public class DeptHeadActivity extends AppCompatActivity
                     .remove("username")
                     .remove("password")
                     .commit();
-        }
-        else if (id == R.id.nav_requests)
-        {
-            startActivity(new Intent(DeptHeadActivity.this,OngoingActivity.class));
+        } else if (id == R.id.nav_requests) {
+            startActivity(new Intent(DeptHeadActivity.this, OngoingActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dh_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -151,7 +151,10 @@ public class DeptHeadActivity extends AppCompatActivity
 
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(mLayoutManager);
-            mAdapter = new DeptHeadListAdapter(masterCards,getIntent().getStringExtra("position"));
+            mAdapter = new DeptHeadListAdapter(
+                    masterCards, getIntent().getStringExtra("position"),args0->{
+                        new HttpRequestAsk().execute();
+            });
             mRecyclerView.setAdapter(mAdapter);
         }
     }

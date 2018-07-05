@@ -41,14 +41,28 @@ public class RequestHeaderRestClient {
         }
     }
 
-    public RequestHeader submit(RequestHeader request){
+    public Request submit(Request request){
         try {
-            HttpEntity<RequestHeader> req = new HttpEntity<RequestHeader>(request);
-            ResponseEntity<RequestHeader> response = restTemplate
-                    .exchange(BASE_URL, HttpMethod.POST, req, RequestHeader.class);
+            HttpEntity<Request> req = new HttpEntity<Request>(request);
+            ResponseEntity<Request> response = restTemplate
+                    .exchange(BASE_URL, HttpMethod.POST, req, Request.class);
             return response.getBody();
         } catch (Exception e){
             return null;
+        }
+    }
+
+    public void approve(Long request_id, String division ,boolean approve){
+        try {
+            String acc = approve?"ACCEPTED":"REJECTED";
+            restTemplate.exchange(
+                    BASE_URL + "/" + request_id + "/" + division + "/" + acc,
+                    HttpMethod.PUT,
+                    null,
+                    new ParameterizedTypeReference<List<MasterItem>>() {
+                    }).getBody();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 }
