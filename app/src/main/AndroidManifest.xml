@@ -44,6 +44,10 @@
         <activity
             android:name=".HistoryActivity"
             android:label="@string/title_activity_history"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PurchasingActivity"
+            android:label="@string/title_activity_purchasing"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

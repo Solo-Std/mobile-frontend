@@ -98,6 +98,7 @@ public class HomeActivity extends AppCompatActivity
             new HttpRequestAsk().execute();
         } else if (id == R.id.nav_purchasing) {
 
+            startActivity(new Intent(HomeActivity.this,PurchasingActivity.class));
         } else if (id == R.id.nav_gm) {
 
         } else if (id == R.id.nav_logout) {

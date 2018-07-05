@@ -11,5 +11,6 @@
     <string name="title_activity_purchase_request">PurchaseRequestActivity</string>
     <string name="title_activity_dept_head">DeptHeadActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_purchasing">PurchasingActivity</string>
 
 </resources>
