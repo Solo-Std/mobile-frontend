@@ -53,14 +53,6 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
-       /* //Populate the ArrayList with your own values
-        requests.add(new RequestHeader("PR-2018040003","STOCK","erwin","2018-04-03","Rp 3.500.000,00"));
-        requests.add(new RequestHeader("PR-2018040007","STOCK","erwin","2018-04-07","Rp 2.000.000,00"));
-        requests.add(new RequestHeader("PR-2018040012","NON-STOCK","erwin","2018-04-12","Rp 5.800.000,00"));
-        */
-
         HomeListAdapter adapter = new HomeListAdapter(requests);
         RecyclerView myView = (RecyclerView) findViewById(R.id.recycler_view);
         myView.setHasFixedSize(true);
@@ -116,6 +108,10 @@ public class HomeActivity extends AppCompatActivity
                     .remove("username")
                     .remove("password")
                     .commit();
+        }
+            else if(id == R.id.nav_history)
+        {
+            startActivity(new Intent(HomeActivity.this,HistoryActivity.class));
         }
             else if (id == R.id.nav_requests)
         {
