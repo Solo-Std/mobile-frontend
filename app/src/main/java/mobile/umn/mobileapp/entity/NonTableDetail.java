@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 public class NonTableDetail {
     private int item_id;
     private int qty;
-    private int request_header_id;
-    private int request_detail_id;
+    private Long request_header_id;
+    private Long request_detail_id;
 }
