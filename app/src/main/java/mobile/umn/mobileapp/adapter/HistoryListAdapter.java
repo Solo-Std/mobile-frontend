@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
         public TextView request_name;
         public TextView request_date;
         public TextView request_price;
-
+        public TableLayout wholetable;
         public Button button_approve;
         public Button button_reject;
         public TextView approval_box1,approval_box2,approval_box3,approval_box4;
@@ -51,6 +52,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
             approval_box3 = (TextView) v.findViewById(R.id.text_approval_box_3);
             approval_box4 = (TextView) v.findViewById(R.id.text_approval_box_4);
 
+            wholetable = (TableLayout) v.findViewById(R.id.wholetable);
             button_approve.setOnClickListener((view -> {
                 int position = getAdapterPosition();
                 // mDataset.remove(position);
@@ -116,8 +118,13 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
         else if(historymasterCards.get(position).getApp_by4().equals("REJECTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#FF0000"));
         else holder.approval_box4.setBackgroundColor(Color.parseColor("#cedbef"));
 
-
-
+        if(historymasterCards.get(position).getApp_by1().equals("ACCEPTED") &&
+                historymasterCards.get(position).getApp_by2().equals("ACCEPTED") &&
+                historymasterCards.get(position).getApp_by3().equals("ACCEPTED") &&
+                historymasterCards.get(position).getApp_by4().equals("ACCEPTED") )
+        {
+            holder.wholetable.setVisibility(View.GONE);
+        }
        /*disini set if buat mati nyalain
         holder.approval_box1.setVisibility(View.GONE);
         holder.approval_box2.setVisibility(View.GONE);
