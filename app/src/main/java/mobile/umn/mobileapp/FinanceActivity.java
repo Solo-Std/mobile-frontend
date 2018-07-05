@@ -4,14 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -19,9 +23,10 @@ import java.util.List;
 
 import entity.MasterCard;
 import mobile.umn.mobileapp.adapter.DeptHeadListAdapter;
+import mobile.umn.mobileapp.adapter.FinanceListAdapter;
 import mobile.umn.mobileapp.model.MasterCardRestClient;
 
-public class DeptHeadActivity extends AppCompatActivity
+public class FinanceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mRecyclerView;
@@ -33,9 +38,10 @@ public class DeptHeadActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dept_head);
+        setContentView(R.layout.activity_finance);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.dh_recycler_view);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.fin_recycler_view);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -56,7 +62,7 @@ public class DeptHeadActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dh_drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.fin_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -68,7 +74,7 @@ public class DeptHeadActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dh_drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.fin_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -83,20 +89,20 @@ public class DeptHeadActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_pr) {
-            Intent i = new Intent(DeptHeadActivity.this, PurchaseRequestActivity.class);
+            Intent i = new Intent(FinanceActivity.this, PurchaseRequestActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
-            Intent i = new Intent(DeptHeadActivity.this, DeptHeadActivity.class);
+            Intent i = new Intent(FinanceActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
             i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_finance) {
-            Intent i = new Intent(DeptHeadActivity.this, FinanceActivity.class);
+            Intent i = new Intent(FinanceActivity.this, FinanceActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
@@ -107,7 +113,7 @@ public class DeptHeadActivity extends AppCompatActivity
         } else if (id == R.id.nav_gm) {
 
         } else if (id == R.id.nav_logout) {
-            Intent i = new Intent(DeptHeadActivity.this, LoginActivity.class);
+            Intent i = new Intent(FinanceActivity.this, LoginActivity.class);
             startActivity(i);
             getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
                     .edit()
@@ -117,9 +123,10 @@ public class DeptHeadActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_requests)
         {
-            startActivity(new Intent(DeptHeadActivity.this,OngoingActivity.class));
+            startActivity(new Intent(FinanceActivity.this,OngoingActivity.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dh_drawer_layout);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.fin_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -136,11 +143,11 @@ public class DeptHeadActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(List<MasterCard> masterCards) {
-            mRecyclerView = (RecyclerView) findViewById(R.id.dh_recycler_view);
+            mRecyclerView = (RecyclerView) findViewById(R.id.fin_recycler_view);
 
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(mLayoutManager);
-            mAdapter = new DeptHeadListAdapter(masterCards,getIntent().getStringExtra("position"));
+            mAdapter = new FinanceListAdapter(masterCards,getIntent().getStringExtra("position"));
             mRecyclerView.setAdapter(mAdapter);
         }
     }

@@ -101,9 +101,19 @@ public class HomeActivity extends AppCompatActivity
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
-
+            Intent i = new Intent(HomeActivity.this, DeptHeadActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_finance) {
-            new HttpRequestAsk().execute();
+            Intent i = new Intent(HomeActivity.this, FinanceActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_purchasing) {
 
         } else if (id == R.id.nav_gm) {

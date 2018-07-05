@@ -118,11 +118,25 @@ public class PurchaseRequestActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_pr) {
-
+            Intent i = new Intent(PurchaseRequestActivity.this, PurchaseRequestActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            startActivity(i);
         } else if (id == R.id.nav_depthead) {
-
+            Intent i = new Intent(PurchaseRequestActivity.this, DeptHeadActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_finance) {
-
+            Intent i = new Intent(PurchaseRequestActivity.this, FinanceActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_purchasing) {
 
         } else if (id == R.id.nav_gm) {
@@ -136,8 +150,12 @@ public class PurchaseRequestActivity extends AppCompatActivity
                     .remove("password")
                     .commit();
         }
+        else if (id == R.id.nav_requests)
+        {
+            startActivity(new Intent(PurchaseRequestActivity.this,OngoingActivity.class));
+        }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.pr_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
