@@ -2,6 +2,8 @@ package mobile.umn.mobileapp;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,10 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.MasterCard;
-import mobile.umn.mobileapp.adapter.OngoingRequestListAdapter;
+import mobile.umn.mobileapp.adapter.HistoryListAdapter;
+import mobile.umn.mobileapp.model.HistoryRestClient;
 import mobile.umn.mobileapp.model.MasterCardRestClient;
 
-public class OngoingActivity extends AppCompatActivity
+public class HistoryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -37,8 +40,8 @@ public class OngoingActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ongoing);
-        mRecyclerView = (RecyclerView) findViewById(R.id.ongoing_recycler_view);
+        setContentView(R.layout.activity_history);
+        mRecyclerView = (RecyclerView) findViewById(R.id.history_recycler_view);
 
         mRecyclerView.setHasFixedSize(true);
 
@@ -46,10 +49,7 @@ public class OngoingActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         try{
-            new HttpRequestAsk().execute();
-            //masterCards.add(new MasterCard(123,1123));
-//            mAdapter = new OngoingRequestListAdapter(masterCards);
-//            mRecyclerView.setAdapter(mAdapter);
+            new HistoryActivity.HttpRequestAsk().execute();
             System.out.println("itemcount:"+masterCards.size());
         }
         catch (Exception e)
@@ -60,7 +60,7 @@ public class OngoingActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoing_drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             @Override
@@ -77,6 +77,7 @@ public class OngoingActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+
     }
 
 
@@ -84,26 +85,26 @@ public class OngoingActivity extends AppCompatActivity
 
         @Override
         protected List<MasterCard> doInBackground(Void... voids) {
-            MasterCardRestClient masterCardRestClient = new MasterCardRestClient();
-            masterCards = masterCardRestClient.findAll();
+            HistoryRestClient historyRestClient = new HistoryRestClient();
+            masterCards = historyRestClient.findAll();
             System.out.println("itemcount:"+masterCards.size());
-            return masterCardRestClient.findAll();
+            return historyRestClient.findAll();
         }
 
         @Override
         protected void onPostExecute(List<MasterCard> masterCards) {
-            mRecyclerView = (RecyclerView) findViewById(R.id.ongoing_recycler_view);
+            mRecyclerView = (RecyclerView) findViewById(R.id.history_recycler_view);
 
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(mLayoutManager);
-            mAdapter = new OngoingRequestListAdapter(masterCards);
+            mAdapter = new HistoryListAdapter(masterCards);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoing_drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -154,11 +155,10 @@ public class OngoingActivity extends AppCompatActivity
         {
 
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.ongoing_drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.history_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
 
 
