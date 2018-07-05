@@ -1,4 +1,4 @@
-package mobile.umn.mobileapp.model;
+package mobile.umn.mobileapp.entity;
 
 import java.util.List;
 

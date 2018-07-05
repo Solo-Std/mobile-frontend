@@ -29,7 +29,7 @@ import mobile.umn.mobileapp.adapter.AddItemAdapter;
 import mobile.umn.mobileapp.entity.MasterItem;
 import mobile.umn.mobileapp.entity.RequestDetail;
 import mobile.umn.mobileapp.model.MasterItemRestClient;
-import mobile.umn.mobileapp.model.RequestHeader;
+import mobile.umn.mobileapp.entity.RequestHeader;
 import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 public class PurchaseRequestActivity extends AppCompatActivity
@@ -59,7 +59,9 @@ public class PurchaseRequestActivity extends AppCompatActivity
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + getIntent().getExtras().getInt("requests") + " new requests");
+                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
+                ((TextView) findViewById(R.id.text_fullname)).setText(getIntent().getStringExtra("fullname")
+                        + " - " + getIntent().getStringExtra("position"));
             }
         };
         drawer.addDrawerListener(toggle);
@@ -122,6 +124,7 @@ public class PurchaseRequestActivity extends AppCompatActivity
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", requests.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
             Intent i = new Intent(PurchaseRequestActivity.this, DeptHeadActivity.class);

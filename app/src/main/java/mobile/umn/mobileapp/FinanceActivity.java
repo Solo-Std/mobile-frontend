@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,15 @@ public class FinanceActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.fin_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                ((TextView) findViewById(R.id.text_request_count)).setText("You have " + masterCards.size() + " new requests");
+                ((TextView) findViewById(R.id.text_fullname)).setText(getIntent().getStringExtra("fullname")
+                        + " - " + getIntent().getStringExtra("position"));
+            }
+        };
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -93,6 +102,7 @@ public class FinanceActivity extends AppCompatActivity
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
             Intent i = new Intent(FinanceActivity.this, DeptHeadActivity.class);

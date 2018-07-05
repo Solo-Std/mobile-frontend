@@ -3,7 +3,6 @@ package mobile.umn.mobileapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -24,7 +23,7 @@ import java.util.List;
 
 import mobile.umn.mobileapp.adapter.HomeListAdapter;
 import mobile.umn.mobileapp.model.MasterItemRestClient;
-import mobile.umn.mobileapp.model.RequestHeader;
+import mobile.umn.mobileapp.entity.RequestHeader;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,6 +44,8 @@ public class HomeActivity extends AppCompatActivity
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 ((TextView) findViewById(R.id.text_request_count)).setText("You have " + requests.size() + " new requests");
+                ((TextView) findViewById(R.id.text_fullname)).setText(getIntent().getStringExtra("fullname")
+                + " - " + getIntent().getStringExtra("position"));
             }
         };
         drawer.addDrawerListener(toggle);
@@ -99,6 +100,7 @@ public class HomeActivity extends AppCompatActivity
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", requests.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_depthead) {
             Intent i = new Intent(HomeActivity.this, DeptHeadActivity.class);

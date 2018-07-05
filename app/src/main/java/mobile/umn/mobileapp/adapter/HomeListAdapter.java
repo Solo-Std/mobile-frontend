@@ -4,17 +4,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import mobile.umn.mobileapp.HomeActivity;
 import mobile.umn.mobileapp.R;
-import mobile.umn.mobileapp.model.RequestHeader;
+import mobile.umn.mobileapp.entity.RequestHeader;
 
 /**
  * Created by User on 24/05/2018.
