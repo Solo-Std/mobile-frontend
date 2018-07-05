@@ -48,12 +48,10 @@ public class GeneralManagerActivity extends AppCompatActivity
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        try{
+        try {
             new GeneralManagerActivity.HttpRequestAsk().execute();
-            System.out.println("itemcount:"+masterCards.size());
-        }
-        catch (Exception e)
-        {
+            System.out.println("itemcount:" + masterCards.size());
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("berhasil");
         }
@@ -62,11 +60,12 @@ public class GeneralManagerActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.general_manager_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if(masterCards!= null)((TextView)findViewById(R.id.text_request_count)).setText("You have " + masterCards.size() + " new requests");
+                if (masterCards != null)
+                    ((TextView) findViewById(R.id.text_request_count)).setText("You have " + masterCards.size() + " new requests");
             }
 
         };
@@ -83,7 +82,7 @@ public class GeneralManagerActivity extends AppCompatActivity
         protected List<MasterCard> doInBackground(Void... voids) {
             MasterCardRestClient masterCardRestClient = new MasterCardRestClient();
             masterCards = masterCardRestClient.findAll();
-            System.out.println("itemcount:"+masterCards.size());
+            System.out.println("itemcount:" + masterCards.size());
             return masterCardRestClient.findAll();
         }
 
@@ -93,7 +92,9 @@ public class GeneralManagerActivity extends AppCompatActivity
 
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setLayoutManager(mLayoutManager);
-            mAdapter = new GeneralManagerListAdapter(masterCards);
+            mAdapter = new GeneralManagerListAdapter(masterCards, args0 -> {
+                new HttpRequestAsk().execute();
+            });
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -136,14 +137,7 @@ public class GeneralManagerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_pr) {
-            Intent i = new Intent(GeneralManagerActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", masterCards.size());
-            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
-            i.putExtra("position", getIntent().getStringExtra("position"));
-            startActivity(i);
-        } else if (id == R.id.nav_depthead) {
+        if (id == R.id.nav_depthead) {
             Intent i = new Intent(GeneralManagerActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
@@ -165,7 +159,14 @@ public class GeneralManagerActivity extends AppCompatActivity
             i.putExtra("position", getIntent().getStringExtra("position"));
             startActivity(i);
 
-        } else if (id == R.id.nav_gm) {
+        } else if (id == R.id.nav_history) {
+            Intent i = new Intent(GeneralManagerActivity.this, HistoryActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
+        }else if (id == R.id.nav_gm) {
             Intent i = new Intent(GeneralManagerActivity.this, GeneralManagerActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
@@ -185,7 +186,7 @@ public class GeneralManagerActivity extends AppCompatActivity
             startActivity(new Intent(GeneralManagerActivity.this, OngoingActivity.class));
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.general_manager_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

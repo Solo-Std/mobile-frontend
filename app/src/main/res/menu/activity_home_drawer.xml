@@ -5,10 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_pr"
-            android:icon="@drawable/ic_insert_drive_file_black_24dp"
-            android:title="Purchase Request" />
-        <item
             android:id="@+id/nav_depthead"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Approval by Dept. Head" />

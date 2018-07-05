@@ -121,14 +121,7 @@ public class PurchaseRequestActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_pr) {
-            Intent i = new Intent(PurchaseRequestActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", requests.size());
-            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
-            i.putExtra("position", getIntent().getStringExtra("position"));
-            startActivity(i);
-        } else if (id == R.id.nav_depthead) {
+        if (id == R.id.nav_depthead) {
             Intent i = new Intent(PurchaseRequestActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", requests.size());

@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import mobile.umn.mobileapp.R;
 
 public class OngoingRequestListAdapter extends RecyclerView.Adapter<OngoingRequestListAdapter.ViewHolder>{
     private List<MasterCard> ongoingmasterCards;
+    View.OnClickListener onClickListener;
+    View view;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{

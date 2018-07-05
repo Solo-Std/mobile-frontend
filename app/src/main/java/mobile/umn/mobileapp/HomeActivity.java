@@ -63,14 +63,7 @@ public class HomeActivity extends AppCompatActivity
         myView.setLayoutManager(llm);
 
 
-        if (getIntent().getStringExtra("position").equals("Employee")) {
-            Intent i = new Intent(HomeActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", requests.size());
-            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
-            i.putExtra("position",getIntent().getStringExtra("position"));
-            startActivity(i);
-        } else if (getIntent().getStringExtra("position").equals("Department Head")) {
+        if (getIntent().getStringExtra("position").equals("Department Head")) {
             Intent i = new Intent(HomeActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", requests.size());
@@ -84,10 +77,20 @@ public class HomeActivity extends AppCompatActivity
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
             i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
-        } else if (getIntent().getStringExtra("position").equals("Purchasing Manager")) {
-
         } else if (getIntent().getStringExtra("position").equals("General Manager")) {
-
+            Intent i = new Intent(HomeActivity.this, GeneralManagerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
+        } else if (getIntent().getStringExtra("position").equals("Purchasing Manager")) {
+            Intent i = new Intent(HomeActivity.this, PurchasingActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", requests.size());
+            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
+            i.putExtra("position",getIntent().getStringExtra("position"));
+            startActivity(i);
         }
     }
 
@@ -115,14 +118,7 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-        if (id == R.id.nav_pr) {
-            Intent i = new Intent(HomeActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", requests.size());
-            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
-            i.putExtra("position",getIntent().getStringExtra("position"));
-            startActivity(i);
-        } else if (id == R.id.nav_depthead) {
+        if (id == R.id.nav_depthead) {
             Intent i = new Intent(HomeActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", requests.size());

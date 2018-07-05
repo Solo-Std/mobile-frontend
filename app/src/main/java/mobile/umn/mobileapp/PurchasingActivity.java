@@ -136,15 +136,8 @@ public class PurchasingActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_pr) {
-            Intent i = new Intent(OngoingActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", masterCards.size());
-            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
-            i.putExtra("position", getIntent().getStringExtra("position"));
-            startActivity(i);
-        } else if (id == R.id.nav_depthead) {
-            Intent i = new Intent(OngoingActivity.this, DeptHeadActivity.class);
+        if (id == R.id.nav_depthead) {
+            Intent i = new Intent(PurchasingActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
             i.putExtra("fullname", getIntent().getStringExtra("fullname"));
@@ -158,9 +151,26 @@ public class PurchasingActivity extends AppCompatActivity
             i.putExtra("position", getIntent().getStringExtra("position"));
             startActivity(i);
         } else if (id == R.id.nav_purchasing) {
-
+            Intent i = new Intent(PurchasingActivity.this, PurchasingActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_gm) {
-
+            Intent i = new Intent(PurchasingActivity.this, GeneralManagerActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
+        } else if (id == R.id.nav_history) {
+            Intent i = new Intent(PurchasingActivity.this, HistoryActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
         } else if (id == R.id.nav_logout) {
             Intent i = new Intent(PurchasingActivity.this, LoginActivity.class);
             startActivity(i);
@@ -172,7 +182,7 @@ public class PurchasingActivity extends AppCompatActivity
         } else if (id == R.id.nav_requests) {
             startActivity(new Intent(PurchasingActivity.this, OngoingActivity.class));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.dh_drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.purchasing_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

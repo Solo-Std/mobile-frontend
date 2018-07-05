@@ -140,14 +140,7 @@ public class HistoryActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-        if (id == R.id.nav_pr) {
-            Intent i = new Intent(HistoryActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", masterCards.size());
-            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
-            i.putExtra("position", getIntent().getStringExtra("position"));
-            startActivity(i);
-        } else if (id == R.id.nav_depthead) {
+        if (id == R.id.nav_depthead) {
             Intent i = new Intent(HistoryActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
@@ -177,7 +170,14 @@ public class HistoryActivity extends AppCompatActivity
             i.putExtra("position", getIntent().getStringExtra("position"));
             startActivity(i);
 
-        } else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_history) {
+            Intent i = new Intent(HistoryActivity.this, HistoryActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
+        }else if (id == R.id.nav_logout) {
             Intent i = new Intent(HistoryActivity.this, LoginActivity.class);
             startActivity(i);
             getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)

@@ -97,20 +97,21 @@ public class FinanceActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_pr) {
-            Intent i = new Intent(FinanceActivity.this, PurchaseRequestActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.putExtra("requests", masterCards.size());
-            i.putExtra("fullname",getIntent().getStringExtra("fullname"));
-            startActivity(i);
-        } else if (id == R.id.nav_depthead) {
+        if (id == R.id.nav_depthead) {
             Intent i = new Intent(FinanceActivity.this, DeptHeadActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());
             i.putExtra("fullname",getIntent().getStringExtra("fullname"));
             i.putExtra("position",getIntent().getStringExtra("position"));
             startActivity(i);
-        } else if (id == R.id.nav_finance) {
+        } else if (id == R.id.nav_history) {
+            Intent i = new Intent(FinanceActivity.this, HistoryActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtra("requests", masterCards.size());
+            i.putExtra("fullname", getIntent().getStringExtra("fullname"));
+            i.putExtra("position", getIntent().getStringExtra("position"));
+            startActivity(i);
+        }else if (id == R.id.nav_finance) {
             Intent i = new Intent(FinanceActivity.this, FinanceActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             i.putExtra("requests", masterCards.size());

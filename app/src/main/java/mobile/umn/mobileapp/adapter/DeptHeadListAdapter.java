@@ -23,8 +23,8 @@ import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 public class DeptHeadListAdapter extends RecyclerView.Adapter<DeptHeadListAdapter.ViewHolder> {
     private List<MasterCard> ongoingmasterCards;
-    View.OnClickListener onClickListener;
     String position;
+    View.OnClickListener onClickListener;
     View view;
 
 

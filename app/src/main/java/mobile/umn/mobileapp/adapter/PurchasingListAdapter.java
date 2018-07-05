@@ -78,7 +78,7 @@ public class PurchasingListAdapter extends RecyclerView.Adapter<PurchasingListAd
     public PurchasingListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         CardView v = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ongoingcardview_home, parent, false);
+                .inflate(R.layout.dh_card_view_home, parent, false);
         return new PurchasingListAdapter.ViewHolder(v);
     }
 
@@ -93,26 +93,6 @@ public class PurchasingListAdapter extends RecyclerView.Adapter<PurchasingListAd
         holder.request_name.setText(ongoingmasterCards.get(position).getRequested_by());
         holder.request_date.setText(ongoingmasterCards.get(position).getRequest_date());
 
-
-       /*
-
-        */
-
-        if(ongoingmasterCards.get(position).getApp_by1().equals("ACCEPTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#adff2f"));
-        else if(ongoingmasterCards.get(position).getApp_by1().equals("REJECTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box1.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by2().equals("ACCEPTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#7fFF00"));
-        else if(ongoingmasterCards.get(position).getApp_by2().equals("REJECTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box2.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by3().equals("ACCEPTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#41FF30"));
-        else if(ongoingmasterCards.get(position).getApp_by3().equals("REJECTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box3.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by4().equals("ACCEPTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#00ff00"));
-        else if(ongoingmasterCards.get(position).getApp_by4().equals("REJECTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box4.setBackgroundColor(Color.parseColor("#cedbef"));
 
 
 

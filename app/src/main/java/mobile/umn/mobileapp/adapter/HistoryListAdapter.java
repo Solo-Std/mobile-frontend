@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import mobile.umn.mobileapp.R;
 
 public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.ViewHolder>{
     private List<MasterCard> historymasterCards;
+    View.OnClickListener onClickListener;
+    View view;
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -77,7 +80,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
     public HistoryListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         CardView v = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ongoingcardview_home, parent, false);
+                .inflate(R.layout.dh_card_view_home, parent, false);
         return new HistoryListAdapter.ViewHolder(v);
     }
 

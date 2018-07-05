@@ -1,10 +1,12 @@
 package mobile.umn.mobileapp.adapter;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import java.util.List;
 import entity.MasterCard;
 import lombok.NonNull;
 import mobile.umn.mobileapp.R;
+import mobile.umn.mobileapp.model.RequestHeaderRestClient;
 
 /**
  * Created by Heri on 7/5/2018.
@@ -21,6 +24,8 @@ import mobile.umn.mobileapp.R;
 
 public class GeneralManagerListAdapter extends RecyclerView.Adapter<GeneralManagerListAdapter.ViewHolder> {
 private List<MasterCard> ongoingmasterCards;
+    View.OnClickListener onClickListener;
+    View view;
 
 
 public class ViewHolder extends RecyclerView.ViewHolder{
@@ -55,6 +60,7 @@ public class ViewHolder extends RecyclerView.ViewHolder{
             // notifyItemRangeChanged(position, mDataset.size());
             Snackbar.make(view, "Request Approved", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
+            new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"gm",true);
         }));
 
         button_reject.setOnClickListener((view -> {
@@ -64,12 +70,14 @@ public class ViewHolder extends RecyclerView.ViewHolder{
             //notifyItemRangeChanged(position, mDataset.size());
             Snackbar.make(view, "Request Rejected", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
+            new HttpRequestPut(Long.valueOf(request_id.getText().toString()),"gm",false);
         }));
     }
 }
 
-    public GeneralManagerListAdapter(List<MasterCard> masterCards) {
+    public GeneralManagerListAdapter(List<MasterCard> masterCards, View.OnClickListener onClickListener) {
         ongoingmasterCards = masterCards;
+        this.onClickListener = onClickListener;
 //        System.out.println("Price:"+this.ongoingmasterCards.get(0).);
     }
 
@@ -77,8 +85,9 @@ public class ViewHolder extends RecyclerView.ViewHolder{
     @Override
     public GeneralManagerListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
+        view = parent;
         CardView v = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ongoingcardview_home, parent, false);
+                .inflate(R.layout.dh_card_view_home, parent, false);
         return new GeneralManagerListAdapter.ViewHolder(v);
     }
 
@@ -98,21 +107,7 @@ public class ViewHolder extends RecyclerView.ViewHolder{
 
         */
 
-        if(ongoingmasterCards.get(position).getApp_by1().equals("ACCEPTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#adff2f"));
-        else if(ongoingmasterCards.get(position).getApp_by1().equals("REJECTED")) holder.approval_box1.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box1.setBackgroundColor(Color.parseColor("#cedbef"));
 
-        if(ongoingmasterCards.get(position).getApp_by2().equals("ACCEPTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#7fFF00"));
-        else if(ongoingmasterCards.get(position).getApp_by2().equals("REJECTED")) holder.approval_box2.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box2.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by3().equals("ACCEPTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#41FF30"));
-        else if(ongoingmasterCards.get(position).getApp_by3().equals("REJECTED")) holder.approval_box3.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box3.setBackgroundColor(Color.parseColor("#cedbef"));
-
-        if(ongoingmasterCards.get(position).getApp_by4().equals("ACCEPTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#00ff00"));
-        else if(ongoingmasterCards.get(position).getApp_by4().equals("REJECTED")) holder.approval_box4.setBackgroundColor(Color.parseColor("#FF0000"));
-        else holder.approval_box4.setBackgroundColor(Color.parseColor("#cedbef"));
 
 
 
@@ -129,5 +124,29 @@ public class ViewHolder extends RecyclerView.ViewHolder{
     public int getItemCount() {
         return ongoingmasterCards.size();
         //return 0;
+    }
+
+    private class HttpRequestPut extends AsyncTask<Void, Void, Void> {
+        Long request_id;
+        String division;
+        boolean approve;
+
+        HttpRequestPut(Long request_id, String division, boolean approve) {
+            this.request_id = request_id;
+            this.division = division;
+            this.approve = approve;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            RequestHeaderRestClient rhrc = new RequestHeaderRestClient();
+            rhrc.approve(request_id, division, approve);
+            return voids[0];
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            onClickListener.onClick(view);
+        }
     }
 }
