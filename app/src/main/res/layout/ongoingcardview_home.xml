@@ -81,6 +81,53 @@
                 android:stretchColumns="*">
                 <TableRow
                     android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp">
+                    <TextView
+                        android:id="@+id/text_approval_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:layout_margin="5dp"
+                        android:text="  DH   "
+                        />
+                    <TextView
+                        android:id="@+id/text_approval_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity=""
+                        android:layout_margin="5dp"
+                        android:text="  PM   "
+                        />
+                    <TextView
+                        android:id="@+id/text_approval_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:layout_margin="5dp"
+                        android:text="  FC   "
+                        />
+                    <TextView
+                        android:id="@+id/text_approval_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:layout_margin="5dp"
+                        android:text="   GM  "
+                        />
+                </TableRow>
+            </TableLayout>
+        </TableRow>
+
+        <TableRow>
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stretchColumns="*">
+                <TableRow
+                    android:layout_marginRight="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="10dp">
                     <TextView
